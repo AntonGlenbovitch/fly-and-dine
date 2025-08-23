@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderItem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Inflight Ordering Application</a> &gt; <a href="index.source.html" class="el_package">com.airline.ordering.domain</a> &gt; <span class="el_source">OrderItem.java</span></div><h1>OrderItem.java</h1><pre class="source lang-java linenums">package com.airline.ordering.domain;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.UUID;
+
+/**
+ * Represents an individual item within an order.
+ */
+public class OrderItem {
+    
+    @NotNull
+    private UUID orderItemId;
+    
+    @NotNull
+    private UUID menuItemId;
+    
+    @NotNull
+    private String menuItemName; // Denormalized for performance and offline capability
+    
+    @NotNull
+    @Positive
+    private int quantity;
+    
+    @NotNull
+    private BigDecimal unitPrice;
+    
+    @NotNull
+    private BigDecimal totalPrice;
+    
+    private String specialInstructions;
+    
+    private UUID substitutedFromItemId; // If this item is a substitution
+    
+    @NotNull
+    private OrderItemStatus status;
+    
+    @NotNull
+    private LocalDateTime createdAt;
+    
+    private LocalDateTime updatedAt;
+    
+    // Constructors
+<span class="fc" id="L47">    public OrderItem() {</span>
+<span class="fc" id="L48">        this.orderItemId = UUID.randomUUID();</span>
+<span class="fc" id="L49">        this.quantity = 1;</span>
+<span class="fc" id="L50">        this.status = OrderItemStatus.PENDING;</span>
+<span class="fc" id="L51">        this.createdAt = LocalDateTime.now();</span>
+<span class="fc" id="L52">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L53">    }</span>
+    
+    public OrderItem(UUID menuItemId, String menuItemName, int quantity, BigDecimal unitPrice) {
+<span class="fc" id="L56">        this();</span>
+<span class="fc" id="L57">        this.menuItemId = menuItemId;</span>
+<span class="fc" id="L58">        this.menuItemName = menuItemName;</span>
+<span class="fc" id="L59">        this.quantity = quantity;</span>
+<span class="fc" id="L60">        this.unitPrice = unitPrice;</span>
+<span class="fc" id="L61">        this.totalPrice = unitPrice.multiply(BigDecimal.valueOf(quantity));</span>
+<span class="fc" id="L62">    }</span>
+    
+    // Getters and Setters
+    public UUID getOrderItemId() {
+<span class="fc" id="L66">        return orderItemId;</span>
+    }
+    
+    public void setOrderItemId(UUID orderItemId) {
+<span class="nc" id="L70">        this.orderItemId = orderItemId;</span>
+<span class="nc" id="L71">    }</span>
+    
+    public UUID getMenuItemId() {
+<span class="nc" id="L74">        return menuItemId;</span>
+    }
+    
+    public void setMenuItemId(UUID menuItemId) {
+<span class="nc" id="L78">        this.menuItemId = menuItemId;</span>
+<span class="nc" id="L79">        this.updatedAt = LocalDateTime.now();</span>
+<span class="nc" id="L80">    }</span>
+    
+    public String getMenuItemName() {
+<span class="nc" id="L83">        return menuItemName;</span>
+    }
+    
+    public void setMenuItemName(String menuItemName) {
+<span class="nc" id="L87">        this.menuItemName = menuItemName;</span>
+<span class="nc" id="L88">        this.updatedAt = LocalDateTime.now();</span>
+<span class="nc" id="L89">    }</span>
+    
+    public int getQuantity() {
+<span class="fc" id="L92">        return quantity;</span>
+    }
+    
+    public void setQuantity(int quantity) {
+<span class="fc" id="L96">        this.quantity = quantity;</span>
+<span class="fc" id="L97">        this.totalPrice = unitPrice.multiply(BigDecimal.valueOf(quantity));</span>
+<span class="fc" id="L98">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L99">    }</span>
+    
+    public BigDecimal getUnitPrice() {
+<span class="nc" id="L102">        return unitPrice;</span>
+    }
+    
+    public void setUnitPrice(BigDecimal unitPrice) {
+<span class="fc" id="L106">        this.unitPrice = unitPrice;</span>
+<span class="fc" id="L107">        this.totalPrice = unitPrice.multiply(BigDecimal.valueOf(quantity));</span>
+<span class="fc" id="L108">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L109">    }</span>
+    
+    public BigDecimal getTotalPrice() {
+<span class="fc" id="L112">        return totalPrice;</span>
+    }
+    
+    public void setTotalPrice(BigDecimal totalPrice) {
+<span class="nc" id="L116">        this.totalPrice = totalPrice;</span>
+<span class="nc" id="L117">        this.updatedAt = LocalDateTime.now();</span>
+<span class="nc" id="L118">    }</span>
+    
+    public String getSpecialInstructions() {
+<span class="nc" id="L121">        return specialInstructions;</span>
+    }
+    
+    public void setSpecialInstructions(String specialInstructions) {
+<span class="nc" id="L125">        this.specialInstructions = specialInstructions;</span>
+<span class="nc" id="L126">        this.updatedAt = LocalDateTime.now();</span>
+<span class="nc" id="L127">    }</span>
+    
+    public UUID getSubstitutedFromItemId() {
+<span class="nc" id="L130">        return substitutedFromItemId;</span>
+    }
+    
+    public void setSubstitutedFromItemId(UUID substitutedFromItemId) {
+<span class="nc" id="L134">        this.substitutedFromItemId = substitutedFromItemId;</span>
+<span class="nc" id="L135">        this.updatedAt = LocalDateTime.now();</span>
+<span class="nc" id="L136">    }</span>
+    
+    public OrderItemStatus getStatus() {
+<span class="nc" id="L139">        return status;</span>
+    }
+    
+    public void setStatus(OrderItemStatus status) {
+<span class="nc" id="L143">        this.status = status;</span>
+<span class="nc" id="L144">        this.updatedAt = LocalDateTime.now();</span>
+<span class="nc" id="L145">    }</span>
+    
+    public LocalDateTime getCreatedAt() {
+<span class="nc" id="L148">        return createdAt;</span>
+    }
+    
+    public void setCreatedAt(LocalDateTime createdAt) {
+<span class="nc" id="L152">        this.createdAt = createdAt;</span>
+<span class="nc" id="L153">    }</span>
+    
+    public LocalDateTime getUpdatedAt() {
+<span class="nc" id="L156">        return updatedAt;</span>
+    }
+    
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+<span class="nc" id="L160">        this.updatedAt = updatedAt;</span>
+<span class="nc" id="L161">    }</span>
+    
+    // Business methods
+    public boolean isSubstitution() {
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        return substitutedFromItemId != null;</span>
+    }
+    
+    public boolean hasSpecialInstructions() {
+<span class="nc bnc" id="L169" title="All 4 branches missed.">        return specialInstructions != null &amp;&amp; !specialInstructions.trim().isEmpty();</span>
+    }
+    
+    public void incrementQuantity() {
+<span class="nc" id="L173">        setQuantity(quantity + 1);</span>
+<span class="nc" id="L174">    }</span>
+    
+    public void decrementQuantity() {
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        if (quantity &gt; 1) {</span>
+<span class="nc" id="L178">            setQuantity(quantity - 1);</span>
+        }
+<span class="nc" id="L180">    }</span>
+    
+    public void recalculateTotalPrice() {
+<span class="nc" id="L183">        this.totalPrice = unitPrice.multiply(BigDecimal.valueOf(quantity));</span>
+<span class="nc" id="L184">        this.updatedAt = LocalDateTime.now();</span>
+<span class="nc" id="L185">    }</span>
+    
+    // Equals and HashCode
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L190" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L191" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="nc" id="L192">        OrderItem orderItem = (OrderItem) o;</span>
+<span class="nc" id="L193">        return Objects.equals(orderItemId, orderItem.orderItemId);</span>
+    }
+    
+    @Override
+    public int hashCode() {
+<span class="nc" id="L198">        return Objects.hash(orderItemId);</span>
+    }
+    
+    @Override
+    public String toString() {
+<span class="nc" id="L203">        return &quot;OrderItem{&quot; +</span>
+                &quot;orderItemId=&quot; + orderItemId +
+                &quot;, menuItemName='&quot; + menuItemName + '\'' +
+                &quot;, quantity=&quot; + quantity +
+                &quot;, unitPrice=&quot; + unitPrice +
+                &quot;, totalPrice=&quot; + totalPrice +
+                &quot;, status=&quot; + status +
+                '}';
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

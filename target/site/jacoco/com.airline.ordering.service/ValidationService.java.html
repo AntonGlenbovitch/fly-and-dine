@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ValidationService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Inflight Ordering Application</a> &gt; <a href="index.source.html" class="el_package">com.airline.ordering.service</a> &gt; <span class="el_source">ValidationService.java</span></div><h1>ValidationService.java</h1><pre class="source lang-java linenums">package com.airline.ordering.service;
+
+import com.airline.ordering.domain.Order;
+import com.airline.ordering.domain.OrderItem;
+import com.airline.ordering.domain.PassengerType;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * Service interface for validating orders, combos, and substitutions.
+ * Centralizes all business rule validation logic.
+ */
+public interface ValidationService {
+    
+    /**
+     * Validates an entire order for business rules compliance.
+     * 
+     * @param order The order to validate
+     * @return ValidationResult containing errors and warnings
+     */
+    ValidationResult validateOrder(Order order);
+    
+    /**
+     * Validates a single order item.
+     * 
+     * @param orderItem The order item to validate
+     * @param passengerType The passenger type
+     * @return ValidationResult containing errors and warnings
+     */
+    ValidationResult validateOrderItem(OrderItem orderItem, PassengerType passengerType);
+    
+    /**
+     * Validates if items can be ordered together as a combo.
+     * 
+     * @param itemIds List of menu item IDs
+     * @param passengerType The passenger type
+     * @return ValidationResult containing errors and warnings
+     */
+    ValidationResult validateCombo(List&lt;UUID&gt; itemIds, PassengerType passengerType);
+    
+    /**
+     * Validates if a substitution is allowed.
+     * 
+     * @param originalItemId The original item ID
+     * @param substitutionItemId The substitution item ID
+     * @param passengerType The passenger type
+     * @return ValidationResult containing errors and warnings
+     */
+    ValidationResult validateSubstitution(UUID originalItemId, UUID substitutionItemId, PassengerType passengerType);
+    
+    /**
+     * Validates inventory availability for an order.
+     * 
+     * @param order The order to validate
+     * @return ValidationResult containing errors and warnings
+     */
+    ValidationResult validateInventoryAvailability(Order order);
+    
+    /**
+     * Validates passenger eligibility for specific menu items.
+     * 
+     * @param itemIds List of menu item IDs
+     * @param passengerType The passenger type
+     * @return ValidationResult containing errors and warnings
+     */
+    ValidationResult validatePassengerEligibility(List&lt;UUID&gt; itemIds, PassengerType passengerType);
+    
+    /**
+     * Validates order timing constraints (e.g., alcohol service hours).
+     * 
+     * @param order The order to validate
+     * @return ValidationResult containing errors and warnings
+     */
+    ValidationResult validateOrderTiming(Order order);
+    
+    /**
+     * Validates special dietary requirements and allergen conflicts.
+     * 
+     * @param itemIds List of menu item IDs
+     * @param allergens Set of passenger allergens
+     * @param dietaryRequirements Set of dietary requirements
+     * @return ValidationResult containing errors and warnings
+     */
+    ValidationResult validateDietaryRequirements(List&lt;UUID&gt; itemIds, List&lt;String&gt; allergens, List&lt;String&gt; dietaryRequirements);
+    
+    /**
+     * Represents the result of a validation operation.
+     */
+    class ValidationResult {
+        private final List&lt;String&gt; errors;
+        private final List&lt;String&gt; warnings;
+        private final boolean valid;
+        
+<span class="nc" id="L94">        public ValidationResult(List&lt;String&gt; errors, List&lt;String&gt; warnings) {</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">            this.errors = errors != null ? errors : List.of();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">            this.warnings = warnings != null ? warnings : List.of();</span>
+<span class="nc" id="L97">            this.valid = this.errors.isEmpty();</span>
+<span class="nc" id="L98">        }</span>
+        
+        public List&lt;String&gt; getErrors() {
+<span class="nc" id="L101">            return errors;</span>
+        }
+        
+        public List&lt;String&gt; getWarnings() {
+<span class="nc" id="L105">            return warnings;</span>
+        }
+        
+        public boolean isValid() {
+<span class="nc" id="L109">            return valid;</span>
+        }
+        
+        public boolean hasWarnings() {
+<span class="nc bnc" id="L113" title="All 2 branches missed.">            return !warnings.isEmpty();</span>
+        }
+        
+        public boolean hasErrors() {
+<span class="nc bnc" id="L117" title="All 2 branches missed.">            return !errors.isEmpty();</span>
+        }
+        
+        public static ValidationResult valid() {
+<span class="nc" id="L121">            return new ValidationResult(List.of(), List.of());</span>
+        }
+        
+        public static ValidationResult withErrors(List&lt;String&gt; errors) {
+<span class="nc" id="L125">            return new ValidationResult(errors, List.of());</span>
+        }
+        
+        public static ValidationResult withWarnings(List&lt;String&gt; warnings) {
+<span class="nc" id="L129">            return new ValidationResult(List.of(), warnings);</span>
+        }
+        
+        public static ValidationResult withErrorsAndWarnings(List&lt;String&gt; errors, List&lt;String&gt; warnings) {
+<span class="nc" id="L133">            return new ValidationResult(errors, warnings);</span>
+        }
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

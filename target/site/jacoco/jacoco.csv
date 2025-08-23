@@ -1,0 +1,11 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Inflight Ordering Application,com.airline.ordering.domain,OrderItemStatus,33,89,12,0,4,11,10,2,4,2
+Inflight Ordering Application,com.airline.ordering.domain,OrderItem,178,79,14,0,48,25,32,7,25,7
+Inflight Ordering Application,com.airline.ordering.domain,OrderStatus,62,100,26,0,6,12,19,2,6,2
+Inflight Ordering Application,com.airline.ordering.domain,ItemStatus,10,56,2,0,2,8,3,2,2,2
+Inflight Ordering Application,com.airline.ordering.domain,MenuCategory,42,99,16,0,5,12,13,2,5,2
+Inflight Ordering Application,com.airline.ordering.domain,MenuItem,72,272,2,14,21,71,12,38,10,32
+Inflight Ordering Application,com.airline.ordering.domain,Passenger,197,0,14,0,58,0,35,0,28,0
+Inflight Ordering Application,com.airline.ordering.domain,Order,135,334,11,33,49,90,31,47,21,35
+Inflight Ordering Application,com.airline.ordering.domain,PassengerType,32,75,8,0,5,10,9,2,5,2
+Inflight Ordering Application,com.airline.ordering.service,ValidationService.ValidationResult,71,0,8,0,14,0,14,0,10,0

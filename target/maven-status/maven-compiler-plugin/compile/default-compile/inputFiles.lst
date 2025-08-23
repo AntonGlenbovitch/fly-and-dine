@@ -1,0 +1,12 @@
+/home/ubuntu/inflight-ordering-app/src/main/java/com/airline/ordering/domain/MenuItem.java
+/home/ubuntu/inflight-ordering-app/src/main/java/com/airline/ordering/domain/ItemStatus.java
+/home/ubuntu/inflight-ordering-app/src/main/java/com/airline/ordering/domain/MenuCategory.java
+/home/ubuntu/inflight-ordering-app/src/main/java/com/airline/ordering/domain/OrderStatus.java
+/home/ubuntu/inflight-ordering-app/src/main/java/com/airline/ordering/domain/Passenger.java
+/home/ubuntu/inflight-ordering-app/src/main/java/com/airline/ordering/domain/OrderItem.java
+/home/ubuntu/inflight-ordering-app/src/main/java/com/airline/ordering/service/ValidationService.java
+/home/ubuntu/inflight-ordering-app/src/main/java/com/airline/ordering/domain/OrderItemStatus.java
+/home/ubuntu/inflight-ordering-app/src/main/java/com/airline/ordering/service/OrderService.java
+/home/ubuntu/inflight-ordering-app/src/main/java/com/airline/ordering/domain/Order.java
+/home/ubuntu/inflight-ordering-app/src/main/java/com/airline/ordering/domain/PassengerType.java
+/home/ubuntu/inflight-ordering-app/src/main/java/com/airline/ordering/service/MenuService.java

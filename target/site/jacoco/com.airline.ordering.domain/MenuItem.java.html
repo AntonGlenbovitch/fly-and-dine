@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MenuItem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Inflight Ordering Application</a> &gt; <a href="index.source.html" class="el_package">com.airline.ordering.domain</a> &gt; <span class="el_source">MenuItem.java</span></div><h1>MenuItem.java</h1><pre class="source lang-java linenums">package com.airline.ordering.domain;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
+
+/**
+ * Represents a menu item available for ordering during flight.
+ */
+public class MenuItem {
+    
+    @NotNull
+    private UUID itemId;
+    
+    @NotBlank
+    private String name;
+    
+    private String description;
+    
+    @NotNull
+    @PositiveOrZero
+    private BigDecimal price;
+    
+    @NotNull
+    private MenuCategory category;
+    
+    @NotNull
+    private Set&lt;PassengerType&gt; availableForTypes;
+    
+    private Set&lt;String&gt; allergens;
+    
+    private Set&lt;String&gt; dietaryTags; // vegetarian, vegan, gluten-free, etc.
+    
+    @NotNull
+    private ItemStatus status;
+    
+    @PositiveOrZero
+    private int inventoryCount;
+    
+    private Set&lt;UUID&gt; substitutableItems; // Items that can be substituted for this one
+    
+    private Set&lt;UUID&gt; comboItems; // Items that can be ordered together as a combo
+    
+    @NotNull
+    private LocalDateTime createdAt;
+    
+    private LocalDateTime updatedAt;
+    
+    // Constructors
+<span class="fc" id="L56">    public MenuItem() {</span>
+<span class="fc" id="L57">        this.itemId = UUID.randomUUID();</span>
+<span class="fc" id="L58">        this.availableForTypes = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L59">        this.allergens = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L60">        this.dietaryTags = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L61">        this.substitutableItems = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L62">        this.comboItems = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L63">        this.createdAt = LocalDateTime.now();</span>
+<span class="fc" id="L64">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L65">        this.status = ItemStatus.AVAILABLE;</span>
+<span class="fc" id="L66">    }</span>
+    
+    public MenuItem(String name, String description, BigDecimal price, MenuCategory category) {
+<span class="fc" id="L69">        this();</span>
+<span class="fc" id="L70">        this.name = name;</span>
+<span class="fc" id="L71">        this.description = description;</span>
+<span class="fc" id="L72">        this.price = price;</span>
+<span class="fc" id="L73">        this.category = category;</span>
+<span class="fc" id="L74">    }</span>
+    
+    // Getters and Setters
+    public UUID getItemId() {
+<span class="fc" id="L78">        return itemId;</span>
+    }
+    
+    public void setItemId(UUID itemId) {
+<span class="nc" id="L82">        this.itemId = itemId;</span>
+<span class="nc" id="L83">    }</span>
+    
+    public String getName() {
+<span class="fc" id="L86">        return name;</span>
+    }
+    
+    public void setName(String name) {
+<span class="fc" id="L90">        this.name = name;</span>
+<span class="fc" id="L91">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L92">    }</span>
+    
+    public String getDescription() {
+<span class="fc" id="L95">        return description;</span>
+    }
+    
+    public void setDescription(String description) {
+<span class="nc" id="L99">        this.description = description;</span>
+<span class="nc" id="L100">        this.updatedAt = LocalDateTime.now();</span>
+<span class="nc" id="L101">    }</span>
+    
+    public BigDecimal getPrice() {
+<span class="fc" id="L104">        return price;</span>
+    }
+    
+    public void setPrice(BigDecimal price) {
+<span class="nc" id="L108">        this.price = price;</span>
+<span class="nc" id="L109">        this.updatedAt = LocalDateTime.now();</span>
+<span class="nc" id="L110">    }</span>
+    
+    public MenuCategory getCategory() {
+<span class="fc" id="L113">        return category;</span>
+    }
+    
+    public void setCategory(MenuCategory category) {
+<span class="nc" id="L117">        this.category = category;</span>
+<span class="nc" id="L118">        this.updatedAt = LocalDateTime.now();</span>
+<span class="nc" id="L119">    }</span>
+    
+    public Set&lt;PassengerType&gt; getAvailableForTypes() {
+<span class="fc" id="L122">        return new HashSet&lt;&gt;(availableForTypes);</span>
+    }
+    
+    public void setAvailableForTypes(Set&lt;PassengerType&gt; availableForTypes) {
+<span class="nc" id="L126">        this.availableForTypes = new HashSet&lt;&gt;(availableForTypes);</span>
+<span class="nc" id="L127">        this.updatedAt = LocalDateTime.now();</span>
+<span class="nc" id="L128">    }</span>
+    
+    public void addAvailableForType(PassengerType type) {
+<span class="fc" id="L131">        this.availableForTypes.add(type);</span>
+<span class="fc" id="L132">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L133">    }</span>
+    
+    public Set&lt;String&gt; getAllergens() {
+<span class="fc" id="L136">        return new HashSet&lt;&gt;(allergens);</span>
+    }
+    
+    public void setAllergens(Set&lt;String&gt; allergens) {
+<span class="fc" id="L140">        this.allergens = new HashSet&lt;&gt;(allergens);</span>
+<span class="fc" id="L141">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L142">    }</span>
+    
+    public Set&lt;String&gt; getDietaryTags() {
+<span class="fc" id="L145">        return new HashSet&lt;&gt;(dietaryTags);</span>
+    }
+    
+    public void setDietaryTags(Set&lt;String&gt; dietaryTags) {
+<span class="fc" id="L149">        this.dietaryTags = new HashSet&lt;&gt;(dietaryTags);</span>
+<span class="fc" id="L150">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L151">    }</span>
+    
+    public ItemStatus getStatus() {
+<span class="fc" id="L154">        return status;</span>
+    }
+    
+    public void setStatus(ItemStatus status) {
+<span class="fc" id="L158">        this.status = status;</span>
+<span class="fc" id="L159">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L160">    }</span>
+    
+    public int getInventoryCount() {
+<span class="fc" id="L163">        return inventoryCount;</span>
+    }
+    
+    public void setInventoryCount(int inventoryCount) {
+<span class="fc" id="L167">        this.inventoryCount = inventoryCount;</span>
+<span class="fc" id="L168">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L169">    }</span>
+    
+    public Set&lt;UUID&gt; getSubstitutableItems() {
+<span class="fc" id="L172">        return new HashSet&lt;&gt;(substitutableItems);</span>
+    }
+    
+    public void setSubstitutableItems(Set&lt;UUID&gt; substitutableItems) {
+<span class="fc" id="L176">        this.substitutableItems = new HashSet&lt;&gt;(substitutableItems);</span>
+<span class="fc" id="L177">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L178">    }</span>
+    
+    public Set&lt;UUID&gt; getComboItems() {
+<span class="nc" id="L181">        return new HashSet&lt;&gt;(comboItems);</span>
+    }
+    
+    public void setComboItems(Set&lt;UUID&gt; comboItems) {
+<span class="fc" id="L185">        this.comboItems = new HashSet&lt;&gt;(comboItems);</span>
+<span class="fc" id="L186">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L187">    }</span>
+    
+    public LocalDateTime getCreatedAt() {
+<span class="nc" id="L190">        return createdAt;</span>
+    }
+    
+    public void setCreatedAt(LocalDateTime createdAt) {
+<span class="nc" id="L194">        this.createdAt = createdAt;</span>
+<span class="nc" id="L195">    }</span>
+    
+    public LocalDateTime getUpdatedAt() {
+<span class="fc" id="L198">        return updatedAt;</span>
+    }
+    
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+<span class="nc" id="L202">        this.updatedAt = updatedAt;</span>
+<span class="nc" id="L203">    }</span>
+    
+    // Business methods
+    public boolean isAvailableFor(PassengerType passengerType) {
+<span class="fc bfc" id="L207" title="All 4 branches covered.">        return availableForTypes.contains(passengerType) &amp;&amp; status == ItemStatus.AVAILABLE;</span>
+    }
+    
+    public boolean isInStock() {
+<span class="fc bfc" id="L211" title="All 4 branches covered.">        return inventoryCount &gt; 0 &amp;&amp; status == ItemStatus.AVAILABLE;</span>
+    }
+    
+    public boolean canSubstituteWith(UUID itemId) {
+<span class="fc" id="L215">        return substitutableItems.contains(itemId);</span>
+    }
+    
+    public boolean canComboWith(UUID itemId) {
+<span class="fc" id="L219">        return comboItems.contains(itemId);</span>
+    }
+    
+    public boolean hasAllergen(String allergen) {
+<span class="fc" id="L223">        return allergens.contains(allergen.toLowerCase());</span>
+    }
+    
+    public boolean hasDietaryTag(String tag) {
+<span class="fc" id="L227">        return dietaryTags.contains(tag.toLowerCase());</span>
+    }
+    
+    public void decrementInventory() {
+<span class="fc bfc" id="L231" title="All 2 branches covered.">        if (inventoryCount &gt; 0) {</span>
+<span class="fc" id="L232">            inventoryCount--;</span>
+<span class="fc" id="L233">            this.updatedAt = LocalDateTime.now();</span>
+        }
+<span class="fc" id="L235">    }</span>
+    
+    public void incrementInventory() {
+<span class="fc" id="L238">        inventoryCount++;</span>
+<span class="fc" id="L239">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L240">    }</span>
+    
+    // Equals and HashCode
+    @Override
+    public boolean equals(Object o) {
+<span class="fc bfc" id="L245" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L246" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="fc" id="L247">        MenuItem menuItem = (MenuItem) o;</span>
+<span class="fc" id="L248">        return Objects.equals(itemId, menuItem.itemId);</span>
+    }
+    
+    @Override
+    public int hashCode() {
+<span class="fc" id="L253">        return Objects.hash(itemId);</span>
+    }
+    
+    @Override
+    public String toString() {
+<span class="nc" id="L258">        return &quot;MenuItem{&quot; +</span>
+                &quot;itemId=&quot; + itemId +
+                &quot;, name='&quot; + name + '\'' +
+                &quot;, price=&quot; + price +
+                &quot;, category=&quot; + category +
+                &quot;, status=&quot; + status +
+                &quot;, inventoryCount=&quot; + inventoryCount +
+                '}';
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
