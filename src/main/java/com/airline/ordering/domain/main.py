@@ -1,0 +1,2 @@
+print('Hello, I am a Python script.')
+
