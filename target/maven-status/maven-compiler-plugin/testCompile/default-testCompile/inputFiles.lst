@@ -1,2 +1,5 @@
 /home/ubuntu/inflight-ordering-app/src/test/java/com/airline/ordering/domain/MenuItemTest.java
+/home/ubuntu/inflight-ordering-app/src/test/java/com/airline/ordering/repository/impl/MenuItemRepositoryImplTest.java
+/home/ubuntu/inflight-ordering-app/src/test/java/com/airline/ordering/repository/impl/OrderRepositoryImplTest.java
+/home/ubuntu/inflight-ordering-app/src/test/java/com/airline/ordering/repository/impl/PassengerRepositoryImplTest.java
 /home/ubuntu/inflight-ordering-app/src/test/java/com/airline/ordering/domain/OrderTest.java

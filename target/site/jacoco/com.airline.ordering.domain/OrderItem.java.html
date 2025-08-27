@@ -67,26 +67,26 @@ public class OrderItem {
     }
     
     public void setOrderItemId(UUID orderItemId) {
-<span class="nc" id="L70">        this.orderItemId = orderItemId;</span>
-<span class="nc" id="L71">    }</span>
+<span class="fc" id="L70">        this.orderItemId = orderItemId;</span>
+<span class="fc" id="L71">    }</span>
     
     public UUID getMenuItemId() {
-<span class="nc" id="L74">        return menuItemId;</span>
+<span class="fc" id="L74">        return menuItemId;</span>
     }
     
     public void setMenuItemId(UUID menuItemId) {
-<span class="nc" id="L78">        this.menuItemId = menuItemId;</span>
-<span class="nc" id="L79">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L80">    }</span>
+<span class="fc" id="L78">        this.menuItemId = menuItemId;</span>
+<span class="fc" id="L79">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L80">    }</span>
     
     public String getMenuItemName() {
-<span class="nc" id="L83">        return menuItemName;</span>
+<span class="fc" id="L83">        return menuItemName;</span>
     }
     
     public void setMenuItemName(String menuItemName) {
-<span class="nc" id="L87">        this.menuItemName = menuItemName;</span>
-<span class="nc" id="L88">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L89">    }</span>
+<span class="fc" id="L87">        this.menuItemName = menuItemName;</span>
+<span class="fc" id="L88">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L89">    }</span>
     
     public int getQuantity() {
 <span class="fc" id="L92">        return quantity;</span>
@@ -99,7 +99,7 @@ public class OrderItem {
 <span class="fc" id="L99">    }</span>
     
     public BigDecimal getUnitPrice() {
-<span class="nc" id="L102">        return unitPrice;</span>
+<span class="fc" id="L102">        return unitPrice;</span>
     }
     
     public void setUnitPrice(BigDecimal unitPrice) {
@@ -113,52 +113,52 @@ public class OrderItem {
     }
     
     public void setTotalPrice(BigDecimal totalPrice) {
-<span class="nc" id="L116">        this.totalPrice = totalPrice;</span>
-<span class="nc" id="L117">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L118">    }</span>
+<span class="fc" id="L116">        this.totalPrice = totalPrice;</span>
+<span class="fc" id="L117">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L118">    }</span>
     
     public String getSpecialInstructions() {
-<span class="nc" id="L121">        return specialInstructions;</span>
+<span class="fc" id="L121">        return specialInstructions;</span>
     }
     
     public void setSpecialInstructions(String specialInstructions) {
-<span class="nc" id="L125">        this.specialInstructions = specialInstructions;</span>
-<span class="nc" id="L126">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L127">    }</span>
+<span class="fc" id="L125">        this.specialInstructions = specialInstructions;</span>
+<span class="fc" id="L126">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L127">    }</span>
     
     public UUID getSubstitutedFromItemId() {
-<span class="nc" id="L130">        return substitutedFromItemId;</span>
+<span class="fc" id="L130">        return substitutedFromItemId;</span>
     }
     
     public void setSubstitutedFromItemId(UUID substitutedFromItemId) {
-<span class="nc" id="L134">        this.substitutedFromItemId = substitutedFromItemId;</span>
-<span class="nc" id="L135">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L136">    }</span>
+<span class="fc" id="L134">        this.substitutedFromItemId = substitutedFromItemId;</span>
+<span class="fc" id="L135">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L136">    }</span>
     
     public OrderItemStatus getStatus() {
-<span class="nc" id="L139">        return status;</span>
+<span class="fc" id="L139">        return status;</span>
     }
     
     public void setStatus(OrderItemStatus status) {
-<span class="nc" id="L143">        this.status = status;</span>
-<span class="nc" id="L144">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L145">    }</span>
+<span class="fc" id="L143">        this.status = status;</span>
+<span class="fc" id="L144">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L145">    }</span>
     
     public LocalDateTime getCreatedAt() {
-<span class="nc" id="L148">        return createdAt;</span>
+<span class="fc" id="L148">        return createdAt;</span>
     }
     
     public void setCreatedAt(LocalDateTime createdAt) {
-<span class="nc" id="L152">        this.createdAt = createdAt;</span>
-<span class="nc" id="L153">    }</span>
+<span class="fc" id="L152">        this.createdAt = createdAt;</span>
+<span class="fc" id="L153">    }</span>
     
     public LocalDateTime getUpdatedAt() {
 <span class="nc" id="L156">        return updatedAt;</span>
     }
     
     public void setUpdatedAt(LocalDateTime updatedAt) {
-<span class="nc" id="L160">        this.updatedAt = updatedAt;</span>
-<span class="nc" id="L161">    }</span>
+<span class="fc" id="L160">        this.updatedAt = updatedAt;</span>
+<span class="fc" id="L161">    }</span>
     
     // Business methods
     public boolean isSubstitution() {

@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderRepositoryImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Inflight Ordering Application</a> &gt; <a href="index.source.html" class="el_package">com.airline.ordering.repository.impl</a> &gt; <span class="el_source">OrderRepositoryImpl.java</span></div><h1>OrderRepositoryImpl.java</h1><pre class="source lang-java linenums">package com.airline.ordering.repository.impl;
+
+import com.airline.ordering.domain.Order;
+import com.airline.ordering.domain.OrderItem;
+import com.airline.ordering.domain.OrderItemStatus;
+import com.airline.ordering.domain.OrderStatus;
+import com.airline.ordering.repository.OrderRepository;
+import com.airline.ordering.repository.SQLiteConnection;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.math.BigDecimal;
+
+public class OrderRepositoryImpl implements OrderRepository {
+    
+<span class="fc" id="L24">    private static final Logger logger = LoggerFactory.getLogger(OrderRepositoryImpl.class);</span>
+    private final ObjectMapper objectMapper;
+    
+<span class="fc" id="L27">    public OrderRepositoryImpl() {</span>
+<span class="fc" id="L28">        objectMapper = new ObjectMapper();</span>
+<span class="fc" id="L29">        objectMapper.registerModule(new JavaTimeModule());</span>
+<span class="fc" id="L30">    }</span>
+    
+    @Override
+    public Order save(Order order) {
+<span class="fc" id="L34">        String sqlOrder = &quot;INSERT INTO orders(order_id, passenger_id, seat_number, total_amount, status, notes, requested_delivery_time, created_at, updated_at, confirmed_at, delivered_at, synced_with_crs, last_sync_attempt, crs_order_id, sync_version) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)&quot;</span>
+                          + &quot; ON CONFLICT(order_id) DO UPDATE SET passenger_id=?, seat_number=?, total_amount=?, status=?, notes=?, requested_delivery_time=?, updated_at=?, confirmed_at=?, delivered_at=?, synced_with_crs=?, last_sync_attempt=?, crs_order_id=?, sync_version=?&quot;;
+        
+<span class="fc" id="L37">        String sqlOrderItemDelete = &quot;DELETE FROM order_items WHERE order_id = ?&quot;;</span>
+<span class="fc" id="L38">        String sqlOrderItemInsert = &quot;INSERT INTO order_items(order_item_id, order_id, menu_item_id, menu_item_name, quantity, unit_price, total_price, special_instructions, substituted_from_item_id, status, created_at, updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)&quot;;</span>
+        
+<span class="fc" id="L40">        try (Connection conn = SQLiteConnection.getConnection()) {</span>
+<span class="fc" id="L41">            conn.setAutoCommit(false); // Start transaction</span>
+            
+            // Save Order
+<span class="fc" id="L44">            try (PreparedStatement pstmt = conn.prepareStatement(sqlOrder)) {</span>
+<span class="fc" id="L45">                pstmt.setString(1, order.getOrderId().toString());</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">                pstmt.setString(2, order.getPassengerId() != null ? order.getPassengerId().toString() : null);</span>
+<span class="fc" id="L47">                pstmt.setString(3, order.getSeatNumber());</span>
+<span class="fc" id="L48">                pstmt.setDouble(4, order.getTotalAmount().doubleValue());</span>
+<span class="fc" id="L49">                pstmt.setString(5, order.getStatus().name());</span>
+<span class="fc" id="L50">                pstmt.setString(6, order.getNotes());</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">                pstmt.setString(7, order.getRequestedDeliveryTime() != null ? order.getRequestedDeliveryTime().toString() : null);</span>
+<span class="fc" id="L52">                pstmt.setString(8, order.getCreatedAt().toString());</span>
+<span class="fc" id="L53">                pstmt.setString(9, LocalDateTime.now().toString());</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">                pstmt.setString(10, order.getConfirmedAt() != null ? order.getConfirmedAt().toString() : null);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">                pstmt.setString(11, order.getDeliveredAt() != null ? order.getDeliveredAt().toString() : null);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">                pstmt.setInt(12, order.isSyncedWithCrs() ? 1 : 0);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">                pstmt.setString(13, order.getLastSyncAttempt() != null ? order.getLastSyncAttempt().toString() : null);</span>
+<span class="fc" id="L58">                pstmt.setString(14, order.getCrsOrderId());</span>
+<span class="fc" id="L59">                pstmt.setInt(15, order.getSyncVersion());</span>
+                
+                // For ON CONFLICT UPDATE part
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">                pstmt.setString(16, order.getPassengerId() != null ? order.getPassengerId().toString() : null);</span>
+<span class="fc" id="L63">                pstmt.setString(17, order.getSeatNumber());</span>
+<span class="fc" id="L64">                pstmt.setDouble(18, order.getTotalAmount().doubleValue());</span>
+<span class="fc" id="L65">                pstmt.setString(19, order.getStatus().name());</span>
+<span class="fc" id="L66">                pstmt.setString(20, order.getNotes());</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">                pstmt.setString(21, order.getRequestedDeliveryTime() != null ? order.getRequestedDeliveryTime().toString() : null);</span>
+<span class="fc" id="L68">                pstmt.setString(22, LocalDateTime.now().toString());</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">                pstmt.setString(23, order.getConfirmedAt() != null ? order.getConfirmedAt().toString() : null);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">                pstmt.setString(24, order.getDeliveredAt() != null ? order.getDeliveredAt().toString() : null);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">                pstmt.setInt(25, order.isSyncedWithCrs() ? 1 : 0);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">                pstmt.setString(26, order.getLastSyncAttempt() != null ? order.getLastSyncAttempt().toString() : null);</span>
+<span class="fc" id="L73">                pstmt.setString(27, order.getCrsOrderId());</span>
+<span class="fc" id="L74">                pstmt.setInt(28, order.getSyncVersion());</span>
+                
+<span class="fc" id="L76">                pstmt.executeUpdate();</span>
+            }
+            
+            // Delete existing OrderItems for this order
+<span class="fc" id="L80">            try (PreparedStatement pstmt = conn.prepareStatement(sqlOrderItemDelete)) {</span>
+<span class="fc" id="L81">                pstmt.setString(1, order.getOrderId().toString());</span>
+<span class="fc" id="L82">                pstmt.executeUpdate();</span>
+            }
+            
+            // Insert new OrderItems
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">            if (order.getItems() != null) {</span>
+<span class="fc" id="L87">                try (PreparedStatement pstmt = conn.prepareStatement(sqlOrderItemInsert)) {</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">                    for (OrderItem item : order.getItems()) {</span>
+<span class="fc" id="L89">                        pstmt.setString(1, item.getOrderItemId().toString());</span>
+<span class="fc" id="L90">                        pstmt.setString(2, order.getOrderId().toString());</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">                        pstmt.setString(3, item.getMenuItemId() != null ? item.getMenuItemId().toString() : null);</span>
+<span class="fc" id="L92">                        pstmt.setString(4, item.getMenuItemName());</span>
+<span class="fc" id="L93">                        pstmt.setInt(5, item.getQuantity());</span>
+<span class="fc" id="L94">                        pstmt.setDouble(6, item.getUnitPrice().doubleValue());</span>
+<span class="fc" id="L95">                        pstmt.setDouble(7, item.getTotalPrice().doubleValue());</span>
+<span class="fc" id="L96">                        pstmt.setString(8, item.getSpecialInstructions());</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">                        pstmt.setString(9, item.getSubstitutedFromItemId() != null ? item.getSubstitutedFromItemId().toString() : null);</span>
+<span class="fc" id="L98">                        pstmt.setString(10, item.getStatus().name());</span>
+<span class="fc" id="L99">                        pstmt.setString(11, item.getCreatedAt().toString());</span>
+<span class="fc" id="L100">                        pstmt.setString(12, LocalDateTime.now().toString());</span>
+<span class="fc" id="L101">                        pstmt.addBatch();</span>
+<span class="fc" id="L102">                    }</span>
+<span class="fc" id="L103">                    pstmt.executeBatch();</span>
+                }
+            }
+            
+<span class="fc" id="L107">            conn.commit(); // Commit transaction</span>
+<span class="fc" id="L108">            logger.info(&quot;Order saved: {}&quot;, order.getOrderId());</span>
+<span class="fc" id="L109">            return order;</span>
+<span class="nc" id="L110">        } catch (SQLException e) {</span>
+<span class="nc" id="L111">            logger.error(&quot;Error saving order {}: {}&quot;, order.getOrderId(), e.getMessage());</span>
+<span class="nc" id="L112">            throw new RuntimeException(&quot;Error saving order&quot;, e);</span>
+        }
+    }
+    
+    @Override
+    public Optional&lt;Order&gt; findById(UUID id) {
+<span class="fc" id="L118">        String sqlOrder = &quot;SELECT * FROM orders WHERE order_id = ?&quot;;</span>
+        
+<span class="fc" id="L120">        try (Connection conn = SQLiteConnection.getConnection()) {</span>
+<span class="fc" id="L121">            Order order = null;</span>
+<span class="fc" id="L122">            try (PreparedStatement pstmt = conn.prepareStatement(sqlOrder)) {</span>
+<span class="fc" id="L123">                pstmt.setString(1, id.toString());</span>
+<span class="fc" id="L124">                ResultSet rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">                if (rs.next()) {</span>
+<span class="fc" id="L126">                    order = mapRowToOrder(rs);</span>
+                }
+            }
+            
+<span class="fc bfc" id="L130" title="All 2 branches covered.">            if (order != null) {</span>
+<span class="fc" id="L131">                loadOrderItems(conn, order);</span>
+<span class="fc" id="L132">                return Optional.of(order);</span>
+            }
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">        } catch (SQLException e) {</span>
+<span class="nc" id="L135">            logger.error(&quot;Error finding order by ID {}: {}&quot;, id, e.getMessage());</span>
+<span class="nc" id="L136">            throw new RuntimeException(&quot;Error finding order by ID&quot;, e);</span>
+<span class="fc" id="L137">        }</span>
+<span class="fc" id="L138">        return Optional.empty();</span>
+    }
+    
+    @Override
+    public List&lt;Order&gt; findAll() {
+<span class="fc" id="L143">        List&lt;Order&gt; orders = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L144">        String sql = &quot;SELECT * FROM orders&quot;;</span>
+<span class="fc" id="L145">        try (Connection conn = SQLiteConnection.getConnection();</span>
+<span class="fc" id="L146">             Statement stmt = conn.createStatement();</span>
+<span class="fc" id="L147">             ResultSet rs = stmt.executeQuery(sql)) {</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L149">                Order order = mapRowToOrder(rs);</span>
+<span class="fc" id="L150">                loadOrderItems(conn, order);</span>
+<span class="fc" id="L151">                orders.add(order);</span>
+<span class="fc" id="L152">            }</span>
+<span class="nc" id="L153">        } catch (SQLException e) {</span>
+<span class="nc" id="L154">            logger.error(&quot;Error finding all orders: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L155">            throw new RuntimeException(&quot;Error finding all orders&quot;, e);</span>
+<span class="fc" id="L156">        }</span>
+<span class="fc" id="L157">        return orders;</span>
+    }
+    
+    @Override
+    public void deleteById(UUID id) {
+<span class="fc" id="L162">        String sqlOrder = &quot;DELETE FROM orders WHERE order_id = ?&quot;;</span>
+<span class="fc" id="L163">        try (Connection conn = SQLiteConnection.getConnection();</span>
+<span class="fc" id="L164">             PreparedStatement pstmt = conn.prepareStatement(sqlOrder)) {</span>
+<span class="fc" id="L165">            pstmt.setString(1, id.toString());</span>
+<span class="fc" id="L166">            pstmt.executeUpdate();</span>
+<span class="fc" id="L167">            logger.info(&quot;Order deleted: {}&quot;, id);</span>
+<span class="nc" id="L168">        } catch (SQLException e) {</span>
+<span class="nc" id="L169">            logger.error(&quot;Error deleting order by ID {}: {}&quot;, id, e.getMessage());</span>
+<span class="nc" id="L170">            throw new RuntimeException(&quot;Error deleting order by ID&quot;, e);</span>
+<span class="fc" id="L171">        }</span>
+<span class="fc" id="L172">    }</span>
+    
+    @Override
+    public void delete(Order entity) {
+<span class="nc" id="L176">        deleteById(entity.getOrderId());</span>
+<span class="nc" id="L177">    }</span>
+    
+    @Override
+    public long count() {
+<span class="fc" id="L181">        String sql = &quot;SELECT COUNT(*) FROM orders&quot;;</span>
+<span class="fc" id="L182">        try (Connection conn = SQLiteConnection.getConnection();</span>
+<span class="fc" id="L183">             Statement stmt = conn.createStatement();</span>
+<span class="fc" id="L184">             ResultSet rs = stmt.executeQuery(sql)) {</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">            if (rs.next()) {</span>
+<span class="fc" id="L186">                return rs.getLong(1);</span>
+            }
+<span class="pc bpc" id="L188" title="3 of 6 branches missed.">        } catch (SQLException e) {</span>
+<span class="nc" id="L189">            logger.error(&quot;Error counting orders: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L190">            throw new RuntimeException(&quot;Error counting orders&quot;, e);</span>
+<span class="nc" id="L191">        }</span>
+<span class="nc" id="L192">        return 0;</span>
+    }
+    
+    @Override
+    public List&lt;Order&gt; findByPassengerId(UUID passengerId) {
+<span class="fc" id="L197">        List&lt;Order&gt; orders = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L198">        String sql = &quot;SELECT * FROM orders WHERE passenger_id = ?&quot;;</span>
+<span class="fc" id="L199">        try (Connection conn = SQLiteConnection.getConnection();</span>
+<span class="fc" id="L200">             PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L201">            pstmt.setString(1, passengerId.toString());</span>
+<span class="fc" id="L202">            ResultSet rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L204">                Order order = mapRowToOrder(rs);</span>
+<span class="fc" id="L205">                loadOrderItems(conn, order);</span>
+<span class="fc" id="L206">                orders.add(order);</span>
+<span class="fc" id="L207">            }</span>
+<span class="nc" id="L208">        } catch (SQLException e) {</span>
+<span class="nc" id="L209">            logger.error(&quot;Error finding orders by passenger ID {}: {}&quot;, passengerId, e.getMessage());</span>
+<span class="nc" id="L210">            throw new RuntimeException(&quot;Error finding orders by passenger ID&quot;, e);</span>
+<span class="fc" id="L211">        }</span>
+<span class="fc" id="L212">        return orders;</span>
+    }
+    
+    @Override
+    public List&lt;Order&gt; findBySeatNumber(String seatNumber) {
+<span class="fc" id="L217">        List&lt;Order&gt; orders = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L218">        String sql = &quot;SELECT * FROM orders WHERE seat_number = ?&quot;;</span>
+<span class="fc" id="L219">        try (Connection conn = SQLiteConnection.getConnection();</span>
+<span class="fc" id="L220">             PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L221">            pstmt.setString(1, seatNumber);</span>
+<span class="fc" id="L222">            ResultSet rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L224">                Order order = mapRowToOrder(rs);</span>
+<span class="fc" id="L225">                loadOrderItems(conn, order);</span>
+<span class="fc" id="L226">                orders.add(order);</span>
+<span class="fc" id="L227">            }</span>
+<span class="nc" id="L228">        } catch (SQLException e) {</span>
+<span class="nc" id="L229">            logger.error(&quot;Error finding orders by seat number {}: {}&quot;, seatNumber, e.getMessage());</span>
+<span class="nc" id="L230">            throw new RuntimeException(&quot;Error finding orders by seat number&quot;, e);</span>
+<span class="fc" id="L231">        }</span>
+<span class="fc" id="L232">        return orders;</span>
+    }
+    
+    @Override
+    public List&lt;Order&gt; findByStatus(OrderStatus status) {
+<span class="fc" id="L237">        List&lt;Order&gt; orders = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L238">        String sql = &quot;SELECT * FROM orders WHERE status = ?&quot;;</span>
+<span class="fc" id="L239">        try (Connection conn = SQLiteConnection.getConnection();</span>
+<span class="fc" id="L240">             PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L241">            pstmt.setString(1, status.name());</span>
+<span class="fc" id="L242">            ResultSet rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L244">                Order order = mapRowToOrder(rs);</span>
+<span class="fc" id="L245">                loadOrderItems(conn, order);</span>
+<span class="fc" id="L246">                orders.add(order);</span>
+<span class="fc" id="L247">            }</span>
+<span class="nc" id="L248">        } catch (SQLException e) {</span>
+<span class="nc" id="L249">            logger.error(&quot;Error finding orders by status {}: {}&quot;, status, e.getMessage());</span>
+<span class="nc" id="L250">            throw new RuntimeException(&quot;Error finding orders by status&quot;, e);</span>
+<span class="fc" id="L251">        }</span>
+<span class="fc" id="L252">        return orders;</span>
+    }
+    
+    @Override
+    public List&lt;Order&gt; findOrdersRequiringSync() {
+<span class="fc" id="L257">        List&lt;Order&gt; orders = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L258">        String sql = &quot;SELECT * FROM orders WHERE synced_with_crs = 0 AND (status = ? OR status = ? OR status = ?)&quot;;</span>
+<span class="fc" id="L259">        try (Connection conn = SQLiteConnection.getConnection();</span>
+<span class="fc" id="L260">             PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L261">            pstmt.setString(1, OrderStatus.PENDING.name());</span>
+<span class="fc" id="L262">            pstmt.setString(2, OrderStatus.CONFIRMED.name());</span>
+<span class="fc" id="L263">            pstmt.setString(3, OrderStatus.CANCELLED.name());</span>
+<span class="fc" id="L264">            ResultSet rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L266">                Order order = mapRowToOrder(rs);</span>
+<span class="fc" id="L267">                loadOrderItems(conn, order);</span>
+<span class="fc" id="L268">                orders.add(order);</span>
+<span class="fc" id="L269">            }</span>
+<span class="nc" id="L270">        } catch (SQLException e) {</span>
+<span class="nc" id="L271">            logger.error(&quot;Error finding orders requiring sync: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L272">            throw new RuntimeException(&quot;Error finding orders requiring sync&quot;, e);</span>
+<span class="fc" id="L273">        }</span>
+<span class="fc" id="L274">        return orders;</span>
+    }
+    
+    private Order mapRowToOrder(ResultSet rs) throws SQLException {
+<span class="fc" id="L278">        Order order = new Order(UUID.fromString(rs.getString(&quot;passenger_id&quot;)), rs.getString(&quot;seat_number&quot;));</span>
+<span class="fc" id="L279">        order.setOrderId(UUID.fromString(rs.getString(&quot;order_id&quot;)));</span>
+<span class="fc" id="L280">        order.setTotalAmount(BigDecimal.valueOf(rs.getDouble(&quot;total_amount&quot;)));</span>
+<span class="fc" id="L281">        order.setStatus(OrderStatus.valueOf(rs.getString(&quot;status&quot;)));</span>
+<span class="fc" id="L282">        order.setNotes(rs.getString(&quot;notes&quot;));</span>
+        
+<span class="fc" id="L284">        String requestedDeliveryTimeStr = rs.getString(&quot;requested_delivery_time&quot;);</span>
+<span class="pc bpc" id="L285" title="3 of 4 branches missed.">        order.setRequestedDeliveryTime(requestedDeliveryTimeStr != null &amp;&amp; !requestedDeliveryTimeStr.isEmpty() ? LocalDateTime.parse(requestedDeliveryTimeStr) : null);</span>
+        
+<span class="fc" id="L287">        order.setCreatedAt(LocalDateTime.parse(rs.getString(&quot;created_at&quot;)));</span>
+        
+<span class="fc" id="L289">        String updatedAtStr = rs.getString(&quot;updated_at&quot;);</span>
+<span class="pc bpc" id="L290" title="2 of 4 branches missed.">        order.setUpdatedAt(updatedAtStr != null &amp;&amp; !updatedAtStr.isEmpty() ? LocalDateTime.parse(updatedAtStr) : null);</span>
+        
+<span class="fc" id="L292">        String confirmedAtStr = rs.getString(&quot;confirmed_at&quot;);</span>
+<span class="pc bpc" id="L293" title="1 of 4 branches missed.">        order.setConfirmedAt(confirmedAtStr != null &amp;&amp; !confirmedAtStr.isEmpty() ? LocalDateTime.parse(confirmedAtStr) : null);</span>
+        
+<span class="fc" id="L295">        String deliveredAtStr = rs.getString(&quot;delivered_at&quot;);</span>
+<span class="pc bpc" id="L296" title="3 of 4 branches missed.">        order.setDeliveredAt(deliveredAtStr != null &amp;&amp; !deliveredAtStr.isEmpty() ? LocalDateTime.parse(deliveredAtStr) : null);</span>
+        
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">        order.setSyncedWithCrs(rs.getInt(&quot;synced_with_crs&quot;) == 1);</span>
+        
+<span class="fc" id="L300">        String lastSyncAttemptStr = rs.getString(&quot;last_sync_attempt&quot;);</span>
+<span class="pc bpc" id="L301" title="3 of 4 branches missed.">        order.setLastSyncAttempt(lastSyncAttemptStr != null &amp;&amp; !lastSyncAttemptStr.isEmpty() ? LocalDateTime.parse(lastSyncAttemptStr) : null);</span>
+        
+<span class="fc" id="L303">        order.setCrsOrderId(rs.getString(&quot;crs_order_id&quot;));</span>
+<span class="fc" id="L304">        order.setSyncVersion(rs.getInt(&quot;sync_version&quot;));</span>
+<span class="fc" id="L305">        return order;</span>
+    }
+    
+    private OrderItem mapRowToOrderItem(ResultSet rs, UUID orderId) throws SQLException {
+<span class="fc" id="L309">        OrderItem orderItem = new OrderItem(orderId, rs.getString(&quot;menu_item_name&quot;), rs.getInt(&quot;quantity&quot;), BigDecimal.valueOf(rs.getDouble(&quot;unit_price&quot;)));</span>
+<span class="fc" id="L310">        orderItem.setOrderItemId(UUID.fromString(rs.getString(&quot;order_item_id&quot;)));</span>
+<span class="fc" id="L311">        String menuItemId = rs.getString(&quot;menu_item_id&quot;);</span>
+<span class="pc bpc" id="L312" title="2 of 4 branches missed.">        if (menuItemId != null &amp;&amp; !menuItemId.isEmpty()) {</span>
+<span class="fc" id="L313">            orderItem.setMenuItemId(UUID.fromString(menuItemId));</span>
+        } else {
+<span class="nc" id="L315">            orderItem.setMenuItemId(null);</span>
+        }
+<span class="fc" id="L317">        orderItem.setTotalPrice(BigDecimal.valueOf(rs.getDouble(&quot;total_price&quot;)));</span>
+<span class="fc" id="L318">        orderItem.setSpecialInstructions(rs.getString(&quot;special_instructions&quot;));</span>
+<span class="fc" id="L319">        String substitutedFromItemId = rs.getString(&quot;substituted_from_item_id&quot;);</span>
+<span class="pc bpc" id="L320" title="3 of 4 branches missed.">        if (substitutedFromItemId != null &amp;&amp; !substitutedFromItemId.isEmpty()) {</span>
+<span class="nc" id="L321">            orderItem.setSubstitutedFromItemId(UUID.fromString(substitutedFromItemId));</span>
+        } else {
+<span class="fc" id="L323">            orderItem.setSubstitutedFromItemId(null);</span>
+        }
+<span class="fc" id="L325">        orderItem.setStatus(OrderItemStatus.valueOf(rs.getString(&quot;status&quot;)));</span>
+<span class="fc" id="L326">        orderItem.setCreatedAt(LocalDateTime.parse(rs.getString(&quot;created_at&quot;)));</span>
+<span class="fc" id="L327">        String updatedAtStr = rs.getString(&quot;updated_at&quot;);</span>
+<span class="pc bpc" id="L328" title="2 of 4 branches missed.">        orderItem.setUpdatedAt(updatedAtStr != null &amp;&amp; !updatedAtStr.isEmpty() ? LocalDateTime.parse(updatedAtStr) : null);</span>
+<span class="fc" id="L329">        return orderItem;</span>
+    }
+
+    private void loadOrderItems(Connection conn, Order order) throws SQLException {
+<span class="fc" id="L333">        String sqlOrderItems = &quot;SELECT * FROM order_items WHERE order_id = ?&quot;;</span>
+<span class="fc" id="L334">        try (PreparedStatement pstmt = conn.prepareStatement(sqlOrderItems)) {</span>
+<span class="fc" id="L335">            pstmt.setString(1, order.getOrderId().toString());</span>
+<span class="fc" id="L336">            ResultSet rs = pstmt.executeQuery();</span>
+<span class="fc" id="L337">            List&lt;OrderItem&gt; items = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L339">                items.add(mapRowToOrderItem(rs, order.getOrderId()));</span>
+            }
+<span class="fc" id="L341">            order.setItems(items);</span>
+        }
+<span class="fc" id="L343">    }</span>
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

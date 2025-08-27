@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MenuItemRepositoryImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Inflight Ordering Application</a> &gt; <a href="index.source.html" class="el_package">com.airline.ordering.repository.impl</a> &gt; <span class="el_source">MenuItemRepositoryImpl.java</span></div><h1>MenuItemRepositoryImpl.java</h1><pre class="source lang-java linenums">package com.airline.ordering.repository.impl;
+
+import com.airline.ordering.domain.ItemStatus;
+import com.airline.ordering.domain.MenuCategory;
+import com.airline.ordering.domain.MenuItem;
+import com.airline.ordering.domain.PassengerType;
+import com.airline.ordering.repository.MenuItemRepository;
+import com.airline.ordering.repository.SQLiteConnection;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class MenuItemRepositoryImpl implements MenuItemRepository {
+    
+<span class="fc" id="L22">    private static final Logger logger = LoggerFactory.getLogger(MenuItemRepositoryImpl.class);</span>
+    private final ObjectMapper objectMapper;
+    
+<span class="fc" id="L25">    public MenuItemRepositoryImpl() {</span>
+<span class="fc" id="L26">        objectMapper = new ObjectMapper();</span>
+<span class="fc" id="L27">        objectMapper.registerModule(new JavaTimeModule());</span>
+<span class="fc" id="L28">    }</span>
+    
+    @Override
+    public MenuItem save(MenuItem menuItem) {
+<span class="fc" id="L32">        String sql = &quot;INSERT INTO menu_items(item_id, name, description, price, category, available_for_types, allergens, dietary_tags, status, inventory_count, substitutable_items, combo_items, created_at, updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)&quot;</span>
+                     + &quot; ON CONFLICT(item_id) DO UPDATE SET name=?, description=?, price=?, category=?, available_for_types=?, allergens=?, dietary_tags=?, status=?, inventory_count=?, substitutable_items=?, combo_items=?, updated_at=?&quot;;
+        
+<span class="fc" id="L35">        try (Connection conn = SQLiteConnection.getConnection();</span>
+<span class="fc" id="L36">             PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="fc" id="L38">            String availableForTypesJson = objectMapper.writeValueAsString(menuItem.getAvailableForTypes().stream().map(Enum::name).collect(Collectors.toSet()));</span>
+<span class="fc" id="L39">            String allergensJson = objectMapper.writeValueAsString(menuItem.getAllergens());</span>
+<span class="fc" id="L40">            String dietaryTagsJson = objectMapper.writeValueAsString(menuItem.getDietaryTags());</span>
+<span class="fc" id="L41">            String substitutableItemsJson = objectMapper.writeValueAsString(menuItem.getSubstitutableItems());</span>
+<span class="fc" id="L42">            String comboItemsJson = objectMapper.writeValueAsString(menuItem.getComboItems());</span>
+            
+<span class="fc" id="L44">            pstmt.setString(1, menuItem.getItemId().toString());</span>
+<span class="fc" id="L45">            pstmt.setString(2, menuItem.getName());</span>
+<span class="fc" id="L46">            pstmt.setString(3, menuItem.getDescription());</span>
+<span class="fc" id="L47">            pstmt.setDouble(4, menuItem.getPrice().doubleValue());</span>
+<span class="fc" id="L48">            pstmt.setString(5, menuItem.getCategory().name());</span>
+<span class="fc" id="L49">            pstmt.setString(6, availableForTypesJson);</span>
+<span class="fc" id="L50">            pstmt.setString(7, allergensJson);</span>
+<span class="fc" id="L51">            pstmt.setString(8, dietaryTagsJson);</span>
+<span class="fc" id="L52">            pstmt.setString(9, menuItem.getStatus().name());</span>
+<span class="fc" id="L53">            pstmt.setInt(10, menuItem.getInventoryCount());</span>
+<span class="fc" id="L54">            pstmt.setString(11, substitutableItemsJson);</span>
+<span class="fc" id="L55">            pstmt.setString(12, comboItemsJson);</span>
+<span class="fc" id="L56">            pstmt.setString(13, menuItem.getCreatedAt().toString());</span>
+<span class="fc" id="L57">            pstmt.setString(14, LocalDateTime.now().toString());</span>
+            
+            // For ON CONFLICT UPDATE part
+<span class="fc" id="L60">            pstmt.setString(15, menuItem.getName());</span>
+<span class="fc" id="L61">            pstmt.setString(16, menuItem.getDescription());</span>
+<span class="fc" id="L62">            pstmt.setDouble(17, menuItem.getPrice().doubleValue());</span>
+<span class="fc" id="L63">            pstmt.setString(18, menuItem.getCategory().name());</span>
+<span class="fc" id="L64">            pstmt.setString(19, availableForTypesJson);</span>
+<span class="fc" id="L65">            pstmt.setString(20, allergensJson);</span>
+<span class="fc" id="L66">            pstmt.setString(21, dietaryTagsJson);</span>
+<span class="fc" id="L67">            pstmt.setString(22, menuItem.getStatus().name());</span>
+<span class="fc" id="L68">            pstmt.setInt(23, menuItem.getInventoryCount());</span>
+<span class="fc" id="L69">            pstmt.setString(24, substitutableItemsJson);</span>
+<span class="fc" id="L70">            pstmt.setString(25, comboItemsJson);</span>
+<span class="fc" id="L71">            pstmt.setString(26, LocalDateTime.now().toString());</span>
+            
+<span class="fc" id="L73">            pstmt.executeUpdate();</span>
+<span class="fc" id="L74">            logger.info(&quot;MenuItem saved: {}&quot;, menuItem.getItemId());</span>
+<span class="fc" id="L75">            return menuItem;</span>
+<span class="nc" id="L76">        } catch (SQLException | JsonProcessingException e) {</span>
+<span class="nc" id="L77">            logger.error(&quot;Error saving MenuItem {}: {}&quot;, menuItem.getItemId(), e.getMessage());</span>
+<span class="nc" id="L78">            throw new RuntimeException(&quot;Error saving MenuItem&quot;, e);</span>
+        }
+    }
+    
+    @Override
+    public Optional&lt;MenuItem&gt; findById(UUID id) {
+<span class="fc" id="L84">        String sql = &quot;SELECT * FROM menu_items WHERE item_id = ?&quot;;</span>
+<span class="fc" id="L85">        try (Connection conn = SQLiteConnection.getConnection();</span>
+<span class="fc" id="L86">             PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L87">            pstmt.setString(1, id.toString());</span>
+<span class="fc" id="L88">            ResultSet rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">            if (rs.next()) {</span>
+<span class="fc" id="L90">                return Optional.of(mapRowToMenuItem(rs));</span>
+            }
+<span class="pc bpc" id="L92" title="2 of 4 branches missed.">        } catch (SQLException e) {</span>
+<span class="nc" id="L93">            logger.error(&quot;Error finding MenuItem by ID {}: {}&quot;, id, e.getMessage());</span>
+<span class="nc" id="L94">            throw new RuntimeException(&quot;Error finding MenuItem by ID&quot;, e);</span>
+<span class="fc" id="L95">        }</span>
+<span class="fc" id="L96">        return Optional.empty();</span>
+    }
+    
+    @Override
+    public List&lt;MenuItem&gt; findAll() {
+<span class="fc" id="L101">        List&lt;MenuItem&gt; menuItems = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L102">        String sql = &quot;SELECT * FROM menu_items&quot;;</span>
+<span class="fc" id="L103">        try (Connection conn = SQLiteConnection.getConnection();</span>
+<span class="fc" id="L104">             Statement stmt = conn.createStatement();</span>
+<span class="fc" id="L105">             ResultSet rs = stmt.executeQuery(sql)) {</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L107">                menuItems.add(mapRowToMenuItem(rs));</span>
+            }
+<span class="nc" id="L109">        } catch (SQLException e) {</span>
+<span class="nc" id="L110">            logger.error(&quot;Error finding all MenuItems: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L111">            throw new RuntimeException(&quot;Error finding all MenuItems&quot;, e);</span>
+<span class="fc" id="L112">        }</span>
+<span class="fc" id="L113">        return menuItems;</span>
+    }
+    
+    @Override
+    public void deleteById(UUID id) {
+<span class="fc" id="L118">        String sql = &quot;DELETE FROM menu_items WHERE item_id = ?&quot;;</span>
+<span class="fc" id="L119">        try (Connection conn = SQLiteConnection.getConnection();</span>
+<span class="fc" id="L120">             PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L121">            pstmt.setString(1, id.toString());</span>
+<span class="fc" id="L122">            pstmt.executeUpdate();</span>
+<span class="fc" id="L123">            logger.info(&quot;MenuItem deleted: {}&quot;, id);</span>
+<span class="nc" id="L124">        } catch (SQLException e) {</span>
+<span class="nc" id="L125">            logger.error(&quot;Error deleting MenuItem by ID {}: {}&quot;, id, e.getMessage());</span>
+<span class="nc" id="L126">            throw new RuntimeException(&quot;Error deleting MenuItem by ID&quot;, e);</span>
+<span class="fc" id="L127">        }</span>
+<span class="fc" id="L128">    }</span>
+    
+    @Override
+    public void delete(MenuItem entity) {
+<span class="nc" id="L132">        deleteById(entity.getItemId());</span>
+<span class="nc" id="L133">    }</span>
+    
+    @Override
+    public long count() {
+<span class="fc" id="L137">        String sql = &quot;SELECT COUNT(*) FROM menu_items&quot;;</span>
+<span class="fc" id="L138">        try (Connection conn = SQLiteConnection.getConnection();</span>
+<span class="fc" id="L139">             Statement stmt = conn.createStatement();</span>
+<span class="fc" id="L140">             ResultSet rs = stmt.executeQuery(sql)) {</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">            if (rs.next()) {</span>
+<span class="fc" id="L142">                return rs.getLong(1);</span>
+            }
+<span class="pc bpc" id="L144" title="3 of 6 branches missed.">        } catch (SQLException e) {</span>
+<span class="nc" id="L145">            logger.error(&quot;Error counting MenuItems: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L146">            throw new RuntimeException(&quot;Error counting MenuItems&quot;, e);</span>
+<span class="nc" id="L147">        }</span>
+<span class="nc" id="L148">        return 0;</span>
+    }
+    
+    @Override
+    public List&lt;MenuItem&gt; findByCategory(MenuCategory category) {
+<span class="fc" id="L153">        List&lt;MenuItem&gt; menuItems = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L154">        String sql = &quot;SELECT * FROM menu_items WHERE category = ?&quot;;</span>
+<span class="fc" id="L155">        try (Connection conn = SQLiteConnection.getConnection();</span>
+<span class="fc" id="L156">             PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L157">            pstmt.setString(1, category.name());</span>
+<span class="fc" id="L158">            ResultSet rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L160">                menuItems.add(mapRowToMenuItem(rs));</span>
+            }
+<span class="nc" id="L162">        } catch (SQLException e) {</span>
+<span class="nc" id="L163">            logger.error(&quot;Error finding MenuItems by category {}: {}&quot;, category, e.getMessage());</span>
+<span class="nc" id="L164">            throw new RuntimeException(&quot;Error finding MenuItems by category&quot;, e);</span>
+<span class="fc" id="L165">        }</span>
+<span class="fc" id="L166">        return menuItems;</span>
+    }
+    
+    @Override
+    public List&lt;MenuItem&gt; findByStatus(ItemStatus status) {
+<span class="fc" id="L171">        List&lt;MenuItem&gt; menuItems = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L172">        String sql = &quot;SELECT * FROM menu_items WHERE status = ?&quot;;</span>
+<span class="fc" id="L173">        try (Connection conn = SQLiteConnection.getConnection();</span>
+<span class="fc" id="L174">             PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L175">            pstmt.setString(1, status.name());</span>
+<span class="fc" id="L176">            ResultSet rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L178">                menuItems.add(mapRowToMenuItem(rs));</span>
+            }
+<span class="nc" id="L180">        } catch (SQLException e) {</span>
+<span class="nc" id="L181">            logger.error(&quot;Error finding MenuItems by status {}: {}&quot;, status, e.getMessage());</span>
+<span class="nc" id="L182">            throw new RuntimeException(&quot;Error finding MenuItems by status&quot;, e);</span>
+<span class="fc" id="L183">        }</span>
+<span class="fc" id="L184">        return menuItems;</span>
+    }
+    
+    @Override
+    public List&lt;MenuItem&gt; searchByNameOrDescription(String searchTerm) {
+<span class="fc" id="L189">        List&lt;MenuItem&gt; menuItems = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L190">        String sql = &quot;SELECT * FROM menu_items WHERE LOWER(name) LIKE LOWER(?) OR LOWER(description) LIKE LOWER(?)&quot;;</span>
+<span class="fc" id="L191">        try (Connection conn = SQLiteConnection.getConnection();</span>
+<span class="fc" id="L192">             PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L193">            pstmt.setString(1, &quot;%&quot; + searchTerm + &quot;%&quot;);</span>
+<span class="fc" id="L194">            pstmt.setString(2, &quot;%&quot; + searchTerm + &quot;%&quot;);</span>
+<span class="fc" id="L195">            ResultSet rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L197">                menuItems.add(mapRowToMenuItem(rs));</span>
+            }
+<span class="nc" id="L199">        } catch (SQLException e) {</span>
+<span class="nc" id="L200">            logger.error(&quot;Error searching MenuItems by name or description {}: {}&quot;, searchTerm, e.getMessage());</span>
+<span class="nc" id="L201">            throw new RuntimeException(&quot;Error searching MenuItems&quot;, e);</span>
+<span class="fc" id="L202">        }</span>
+<span class="fc" id="L203">        return menuItems;</span>
+    }
+    
+    private MenuItem mapRowToMenuItem(ResultSet rs) throws SQLException {
+<span class="fc" id="L207">        MenuItem menuItem = new MenuItem();</span>
+<span class="fc" id="L208">        menuItem.setItemId(UUID.fromString(rs.getString(&quot;item_id&quot;)));</span>
+<span class="fc" id="L209">        menuItem.setName(rs.getString(&quot;name&quot;));</span>
+<span class="fc" id="L210">        menuItem.setDescription(rs.getString(&quot;description&quot;));</span>
+<span class="fc" id="L211">        menuItem.setPrice(rs.getBigDecimal(&quot;price&quot;));</span>
+<span class="fc" id="L212">        menuItem.setCategory(MenuCategory.valueOf(rs.getString(&quot;category&quot;)));</span>
+<span class="fc" id="L213">        menuItem.setStatus(ItemStatus.valueOf(rs.getString(&quot;status&quot;)));</span>
+<span class="fc" id="L214">        menuItem.setInventoryCount(rs.getInt(&quot;inventory_count&quot;));</span>
+<span class="fc" id="L215">        menuItem.setCreatedAt(LocalDateTime.parse(rs.getString(&quot;created_at&quot;)));</span>
+<span class="fc" id="L216">        menuItem.setUpdatedAt(LocalDateTime.parse(rs.getString(&quot;updated_at&quot;)));</span>
+        
+        try {
+<span class="fc" id="L219">            Set&lt;String&gt; availableForTypesStrings = objectMapper.readValue(rs.getString(&quot;available_for_types&quot;),</span>
+<span class="fc" id="L220">                                                                         objectMapper.getTypeFactory().constructCollectionType(Set.class, String.class));</span>
+<span class="fc" id="L221">            menuItem.setAvailableForTypes(availableForTypesStrings.stream().map(PassengerType::valueOf).collect(Collectors.toSet()));</span>
+            
+<span class="fc" id="L223">            Set&lt;String&gt; allergens = objectMapper.readValue(rs.getString(&quot;allergens&quot;),</span>
+<span class="fc" id="L224">                                                           objectMapper.getTypeFactory().constructCollectionType(Set.class, String.class));</span>
+<span class="fc" id="L225">            menuItem.setAllergens(allergens);</span>
+            
+<span class="fc" id="L227">            Set&lt;String&gt; dietaryTags = objectMapper.readValue(rs.getString(&quot;dietary_tags&quot;),</span>
+<span class="fc" id="L228">                                                             objectMapper.getTypeFactory().constructCollectionType(Set.class, String.class));</span>
+<span class="fc" id="L229">            menuItem.setDietaryTags(dietaryTags);</span>
+            
+<span class="fc" id="L231">            Set&lt;UUID&gt; substitutableItems = objectMapper.readValue(rs.getString(&quot;substitutable_items&quot;),</span>
+<span class="fc" id="L232">                                                                  objectMapper.getTypeFactory().constructCollectionType(Set.class, UUID.class));</span>
+<span class="fc" id="L233">            menuItem.setSubstitutableItems(substitutableItems);</span>
+            
+<span class="fc" id="L235">            Set&lt;UUID&gt; comboItems = objectMapper.readValue(rs.getString(&quot;combo_items&quot;),</span>
+<span class="fc" id="L236">                                                          objectMapper.getTypeFactory().constructCollectionType(Set.class, UUID.class));</span>
+<span class="fc" id="L237">            menuItem.setComboItems(comboItems);</span>
+            
+<span class="nc" id="L239">        } catch (JsonProcessingException e) {</span>
+<span class="nc" id="L240">            logger.error(&quot;Error parsing JSON from MenuItem ResultSet: {}&quot;, e.getMessage());</span>
+            // Handle error, perhaps return an empty set or re-throw as a runtime exception
+<span class="fc" id="L242">        }</span>
+        
+<span class="fc" id="L244">        return menuItem;</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

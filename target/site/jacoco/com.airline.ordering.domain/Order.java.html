@@ -78,45 +78,45 @@ public class Order {
     }
     
     public void setOrderId(UUID orderId) {
-<span class="nc" id="L81">        this.orderId = orderId;</span>
-<span class="nc" id="L82">    }</span>
+<span class="fc" id="L81">        this.orderId = orderId;</span>
+<span class="fc" id="L82">    }</span>
     
     public UUID getPassengerId() {
 <span class="fc" id="L85">        return passengerId;</span>
     }
     
     public void setPassengerId(UUID passengerId) {
-<span class="nc" id="L89">        this.passengerId = passengerId;</span>
-<span class="nc" id="L90">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L91">    }</span>
+<span class="fc" id="L89">        this.passengerId = passengerId;</span>
+<span class="fc" id="L90">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L91">    }</span>
     
     public String getSeatNumber() {
 <span class="fc" id="L94">        return seatNumber;</span>
     }
     
     public void setSeatNumber(String seatNumber) {
-<span class="nc" id="L98">        this.seatNumber = seatNumber;</span>
-<span class="nc" id="L99">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L100">    }</span>
+<span class="fc" id="L98">        this.seatNumber = seatNumber;</span>
+<span class="fc" id="L99">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L100">    }</span>
     
     public List&lt;OrderItem&gt; getItems() {
 <span class="fc" id="L103">        return new ArrayList&lt;&gt;(items);</span>
     }
     
     public void setItems(List&lt;OrderItem&gt; items) {
-<span class="nc" id="L107">        this.items = new ArrayList&lt;&gt;(items);</span>
-<span class="nc" id="L108">        recalculateTotalAmount();</span>
-<span class="nc" id="L109">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L110">    }</span>
+<span class="fc" id="L107">        this.items = new ArrayList&lt;&gt;(items);</span>
+<span class="fc" id="L108">        recalculateTotalAmount();</span>
+<span class="fc" id="L109">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L110">    }</span>
     
     public BigDecimal getTotalAmount() {
 <span class="fc" id="L113">        return totalAmount;</span>
     }
     
     public void setTotalAmount(BigDecimal totalAmount) {
-<span class="nc" id="L117">        this.totalAmount = totalAmount;</span>
-<span class="nc" id="L118">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L119">    }</span>
+<span class="fc" id="L117">        this.totalAmount = totalAmount;</span>
+<span class="fc" id="L118">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L119">    }</span>
     
     public OrderStatus getStatus() {
 <span class="fc" id="L122">        return status;</span>
@@ -134,88 +134,88 @@ public class Order {
 <span class="fc" id="L134">    }</span>
     
     public String getNotes() {
-<span class="nc" id="L137">        return notes;</span>
+<span class="fc" id="L137">        return notes;</span>
     }
     
     public void setNotes(String notes) {
-<span class="nc" id="L141">        this.notes = notes;</span>
-<span class="nc" id="L142">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L143">    }</span>
+<span class="fc" id="L141">        this.notes = notes;</span>
+<span class="fc" id="L142">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L143">    }</span>
     
     public LocalDateTime getRequestedDeliveryTime() {
-<span class="nc" id="L146">        return requestedDeliveryTime;</span>
+<span class="fc" id="L146">        return requestedDeliveryTime;</span>
     }
     
     public void setRequestedDeliveryTime(LocalDateTime requestedDeliveryTime) {
-<span class="nc" id="L150">        this.requestedDeliveryTime = requestedDeliveryTime;</span>
-<span class="nc" id="L151">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L152">    }</span>
+<span class="fc" id="L150">        this.requestedDeliveryTime = requestedDeliveryTime;</span>
+<span class="fc" id="L151">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L152">    }</span>
     
     public LocalDateTime getCreatedAt() {
-<span class="nc" id="L155">        return createdAt;</span>
+<span class="fc" id="L155">        return createdAt;</span>
     }
     
     public void setCreatedAt(LocalDateTime createdAt) {
-<span class="nc" id="L159">        this.createdAt = createdAt;</span>
-<span class="nc" id="L160">    }</span>
+<span class="fc" id="L159">        this.createdAt = createdAt;</span>
+<span class="fc" id="L160">    }</span>
     
     public LocalDateTime getUpdatedAt() {
 <span class="nc" id="L163">        return updatedAt;</span>
     }
     
     public void setUpdatedAt(LocalDateTime updatedAt) {
-<span class="nc" id="L167">        this.updatedAt = updatedAt;</span>
-<span class="nc" id="L168">    }</span>
+<span class="fc" id="L167">        this.updatedAt = updatedAt;</span>
+<span class="fc" id="L168">    }</span>
     
     public LocalDateTime getConfirmedAt() {
 <span class="fc" id="L171">        return confirmedAt;</span>
     }
     
     public void setConfirmedAt(LocalDateTime confirmedAt) {
-<span class="nc" id="L175">        this.confirmedAt = confirmedAt;</span>
-<span class="nc" id="L176">    }</span>
+<span class="fc" id="L175">        this.confirmedAt = confirmedAt;</span>
+<span class="fc" id="L176">    }</span>
     
     public LocalDateTime getDeliveredAt() {
 <span class="fc" id="L179">        return deliveredAt;</span>
     }
     
     public void setDeliveredAt(LocalDateTime deliveredAt) {
-<span class="nc" id="L183">        this.deliveredAt = deliveredAt;</span>
-<span class="nc" id="L184">    }</span>
+<span class="fc" id="L183">        this.deliveredAt = deliveredAt;</span>
+<span class="fc" id="L184">    }</span>
     
     public boolean isSyncedWithCrs() {
 <span class="fc" id="L187">        return syncedWithCrs;</span>
     }
     
     public void setSyncedWithCrs(boolean syncedWithCrs) {
-<span class="nc" id="L191">        this.syncedWithCrs = syncedWithCrs;</span>
-<span class="nc" id="L192">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L193">    }</span>
+<span class="fc" id="L191">        this.syncedWithCrs = syncedWithCrs;</span>
+<span class="fc" id="L192">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L193">    }</span>
     
     public LocalDateTime getLastSyncAttempt() {
 <span class="fc" id="L196">        return lastSyncAttempt;</span>
     }
     
     public void setLastSyncAttempt(LocalDateTime lastSyncAttempt) {
-<span class="nc" id="L200">        this.lastSyncAttempt = lastSyncAttempt;</span>
-<span class="nc" id="L201">    }</span>
+<span class="fc" id="L200">        this.lastSyncAttempt = lastSyncAttempt;</span>
+<span class="fc" id="L201">    }</span>
     
     public String getCrsOrderId() {
 <span class="fc" id="L204">        return crsOrderId;</span>
     }
     
     public void setCrsOrderId(String crsOrderId) {
-<span class="nc" id="L208">        this.crsOrderId = crsOrderId;</span>
-<span class="nc" id="L209">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L210">    }</span>
+<span class="fc" id="L208">        this.crsOrderId = crsOrderId;</span>
+<span class="fc" id="L209">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L210">    }</span>
     
     public int getSyncVersion() {
 <span class="fc" id="L213">        return syncVersion;</span>
     }
     
     public void setSyncVersion(int syncVersion) {
-<span class="nc" id="L217">        this.syncVersion = syncVersion;</span>
-<span class="nc" id="L218">    }</span>
+<span class="fc" id="L217">        this.syncVersion = syncVersion;</span>
+<span class="fc" id="L218">    }</span>
     
     // Business methods
     public void addItem(OrderItem item) {
@@ -316,11 +316,11 @@ public class Order {
 <span class="fc" id="L316">    }</span>
     
     public void cancel() {
-<span class="nc bnc" id="L319" title="All 2 branches missed.">        if (isCancellable()) {</span>
-<span class="nc" id="L320">            setStatus(OrderStatus.CANCELLED);</span>
-<span class="nc" id="L321">            markAsModified();</span>
+<span class="pc bpc" id="L319" title="1 of 2 branches missed.">        if (isCancellable()) {</span>
+<span class="fc" id="L320">            setStatus(OrderStatus.CANCELLED);</span>
+<span class="fc" id="L321">            markAsModified();</span>
         }
-<span class="nc" id="L323">    }</span>
+<span class="fc" id="L323">    }</span>
     
     // Equals and HashCode
     @Override

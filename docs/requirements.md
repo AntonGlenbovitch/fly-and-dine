@@ -1,0 +1,44 @@
+# Inflight Ordering Application: Requirements Specification
+
+## 1. Introduction
+This document outlines the functional and non-functional requirements for an inflight ordering application. The application aims to provide a seamless ordering experience for both crew and passengers, with a strong emphasis on offline capabilities, data synchronization, and security.
+
+## 2. Functional Requirements
+
+### 2.1 Order Management
+- **FR1.1 Create/Modify Orders:** Users (crew/passengers) shall be able to create new orders and modify existing ones.
+- **FR1.2 Validate Combos/Substitutions:** The system shall validate order items for valid combinations and allowed substitutions.
+- **FR1.3 Update Seat/Inventory Locally:** The system shall allow local updates to seat assignments and inventory levels.
+
+### 2.2 Synchronization
+- **FR2.1 Lossless Sync on Landing:** The application shall perform lossless synchronization with the Core Reservation System (CRS) upon landing.
+- **FR2.2 Idempotent Synchronization:** Synchronization operations shall be idempotent, ensuring consistent state even with repeated attempts.
+- **FR2.3 Conflict-Aware Synchronization:** The system shall detect and handle conflicts during synchronization with the CRS.
+
+### 2.3 Passenger Confirmation
+- **FR3.1 Confirmation after CRS Acceptance:** Passengers shall receive a confirmation of their order after successful acceptance by the CRS.
+
+## 3. Non-Functional Requirements
+
+### 3.1 Performance
+- **NFR1.1 Offline Responsiveness:** The application shall remain fully functional and responsive even when offline.
+- **NFR1.2 Synchronization Speed:** Synchronization with CRS shall be efficient and complete within acceptable timeframes upon landing.
+
+### 3.2 Scalability
+- **NFR2.1 User Load:** The application shall support a large number of concurrent users (crew and passengers) on a single flight.
+
+### 3.3 Security & PII
+- **NFR3.1 Device Provisioning:** The application shall support secure device provisioning for crew devices.
+- **NFR3.2 Encrypted at Rest:** All sensitive data, especially PII, shall be encrypted when stored on the device.
+- **NFR3.3 Least Privilege:** The application shall operate with the principle of least privilege, granting only necessary permissions.
+- **NFR3.4 Audit Trails:** The system shall maintain comprehensive audit trails for all critical operations, especially those involving PII.
+
+### 3.4 Cross-Platform Compatibility
+- **NFR4.1 Platform Support:** The application shall work seamlessly on phone, tablet, and laptop devices (crew devices; passengers could also order).
+- **NFR4.2 Same Domain Code:** The core domain logic shall be shared across all platforms.
+- **NFR4.3 Platform-Specific UIs:** User interfaces shall be tailored to each platform (phone, tablet, laptop) for optimal user experience.
+
+### 3.5 Maintainability
+- **NFR5.1 Modularity:** The codebase shall be modular and well-structured to facilitate future enhancements and maintenance.
+- **NFR5.2 Testability:** The application components shall be easily testable to ensure reliability and correctness.
+

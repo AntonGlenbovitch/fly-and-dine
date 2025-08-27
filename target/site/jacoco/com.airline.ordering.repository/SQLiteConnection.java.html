@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SQLiteConnection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Inflight Ordering Application</a> &gt; <a href="index.source.html" class="el_package">com.airline.ordering.repository</a> &gt; <span class="el_source">SQLiteConnection.java</span></div><h1>SQLiteConnection.java</h1><pre class="source lang-java linenums">package com.airline.ordering.repository;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Utility class for managing SQLite database connections and schema creation.
+ */
+public class SQLiteConnection {
+    
+<span class="fc" id="L15">    private static final Logger logger = LoggerFactory.getLogger(SQLiteConnection.class);</span>
+    private static final String DB_URL = &quot;jdbc:sqlite:inflight_ordering.db&quot;;
+    
+    private SQLiteConnection() {
+        // Private constructor to prevent instantiation
+    }
+    
+    /**
+     * Establishes a connection to the SQLite database.
+     * If the database file does not exist, it will be created.
+     * @return A Connection object to the database.
+     * @throws SQLException if a database access error occurs.
+     */
+    public static Connection getConnection() throws SQLException {
+<span class="fc" id="L29">        Connection conn = null;</span>
+        try {
+<span class="fc" id="L31">            conn = DriverManager.getConnection(DB_URL);</span>
+<span class="fc" id="L32">            logger.info(&quot;Connected to SQLite database: {}&quot;, DB_URL);</span>
+<span class="nc" id="L33">        } catch (SQLException e) {</span>
+<span class="nc" id="L34">            logger.error(&quot;Error connecting to SQLite database: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L35">            throw e;</span>
+<span class="fc" id="L36">        }</span>
+<span class="fc" id="L37">        return conn;</span>
+    }
+    
+    /**
+     * Initializes the database schema by creating necessary tables if they don't exist.
+     * This method should be called once at application startup.
+     */
+    public static void initializeDatabase() {
+<span class="fc" id="L45">        String createPassengersTable = &quot;CREATE TABLE IF NOT EXISTS passengers (\n&quot; +</span>
+                                       &quot;    passenger_id TEXT PRIMARY KEY,\n&quot; +
+                                       &quot;    first_name TEXT NOT NULL,\n&quot; +
+                                       &quot;    last_name TEXT NOT NULL,\n&quot; +
+                                       &quot;    email TEXT,\n&quot; +
+                                       &quot;    phone_number TEXT,\n&quot; +
+                                       &quot;    seat_number TEXT NOT NULL,\n&quot; +
+                                       &quot;    type TEXT NOT NULL,\n&quot; +
+                                       &quot;    special_requirements TEXT,\n&quot; +
+                                       &quot;    created_at TEXT NOT NULL,\n&quot; +
+                                       &quot;    updated_at TEXT NOT NULL\n&quot; +
+                                       &quot;);&quot;;
+        
+<span class="fc" id="L58">        String createMenuItemsTable = &quot;CREATE TABLE IF NOT EXISTS menu_items (\n&quot; +</span>
+                                      &quot;    item_id TEXT PRIMARY KEY,\n&quot; +
+                                      &quot;    name TEXT NOT NULL,\n&quot; +
+                                      &quot;    description TEXT,\n&quot; +
+                                      &quot;    price REAL NOT NULL,\n&quot; +
+                                      &quot;    category TEXT NOT NULL,\n&quot; +
+                                      &quot;    available_for_types TEXT,\n&quot; +
+                                      &quot;    allergens TEXT,\n&quot; +
+                                      &quot;    dietary_tags TEXT,\n&quot; +
+                                      &quot;    status TEXT NOT NULL,\n&quot; +
+                                      &quot;    inventory_count INTEGER NOT NULL,\n&quot; +
+                                      &quot;    substitutable_items TEXT,\n&quot; +
+                                      &quot;    combo_items TEXT,\n&quot; +
+                                      &quot;    created_at TEXT NOT NULL,\n&quot; +
+                                      &quot;    updated_at TEXT NOT NULL\n&quot; +
+                                      &quot;);&quot;;
+        
+<span class="fc" id="L75">        String createOrdersTable = &quot;CREATE TABLE IF NOT EXISTS orders (\n&quot; +</span>
+                                   &quot;    order_id TEXT PRIMARY KEY,\n&quot; +
+                                   &quot;    passenger_id TEXT NOT NULL,\n&quot; +
+                                   &quot;    seat_number TEXT NOT NULL,\n&quot; +
+                                   &quot;    total_amount REAL NOT NULL,\n&quot; +
+                                   &quot;    status TEXT NOT NULL,\n&quot; +
+                                   &quot;    notes TEXT,\n&quot; +
+                                   &quot;    requested_delivery_time TEXT,\n&quot; +
+                                   &quot;    created_at TEXT NOT NULL,\n&quot; +
+                                   &quot;    updated_at TEXT NOT NULL,\n&quot; +
+                                   &quot;    confirmed_at TEXT,\n&quot; +
+                                   &quot;    delivered_at TEXT,\n&quot; +
+                                   &quot;    synced_with_crs INTEGER NOT NULL,\n&quot; +
+                                   &quot;    last_sync_attempt TEXT,\n&quot; +
+                                   &quot;    crs_order_id TEXT,\n&quot; +
+                                   &quot;    sync_version INTEGER NOT NULL\n&quot; +
+                                   &quot;);&quot;;
+        
+<span class="fc" id="L93">        String createOrderItemsTable = &quot;CREATE TABLE IF NOT EXISTS order_items (\n&quot; +</span>
+                                       &quot;    order_item_id TEXT PRIMARY KEY,\n&quot; +
+                                       &quot;    order_id TEXT NOT NULL,\n&quot; +
+                                       &quot;    menu_item_id TEXT NOT NULL,\n&quot; +
+                                       &quot;    menu_item_name TEXT NOT NULL,\n&quot; +
+                                       &quot;    quantity INTEGER NOT NULL,\n&quot; +
+                                       &quot;    unit_price REAL NOT NULL,\n&quot; +
+                                       &quot;    total_price REAL NOT NULL,\n&quot; +
+                                       &quot;    special_instructions TEXT,\n&quot; +
+                                       &quot;    substituted_from_item_id TEXT,\n&quot; +
+                                       &quot;    status TEXT NOT NULL,\n&quot; +
+                                       &quot;    created_at TEXT NOT NULL,\n&quot; +
+                                       &quot;    updated_at TEXT NOT NULL,\n&quot; +
+                                       &quot;    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE\n&quot; +
+                                       &quot;);&quot;;
+        
+<span class="fc" id="L109">        try (Connection conn = getConnection();</span>
+<span class="fc" id="L110">             Statement stmt = conn.createStatement()) {</span>
+<span class="fc" id="L111">            stmt.execute(createPassengersTable);</span>
+<span class="fc" id="L112">            stmt.execute(createMenuItemsTable);</span>
+<span class="fc" id="L113">            stmt.execute(createOrdersTable);</span>
+<span class="fc" id="L114">            stmt.execute(createOrderItemsTable);</span>
+<span class="fc" id="L115">            logger.info(&quot;Database schema initialized successfully.&quot;);</span>
+<span class="nc" id="L116">        } catch (SQLException e) {</span>
+<span class="nc" id="L117">            logger.error(&quot;Error initializing database schema: {}&quot;, e.getMessage());</span>
+<span class="fc" id="L118">        }</span>
+<span class="fc" id="L119">    }</span>
+    
+    /**
+     * Closes the given database connection.
+     * @param conn The Connection object to close.
+     */
+    public static void closeConnection(Connection conn) {
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        if (conn != null) {</span>
+            try {
+<span class="nc" id="L128">                conn.close();</span>
+<span class="nc" id="L129">                logger.info(&quot;SQLite database connection closed.&quot;);</span>
+<span class="nc" id="L130">            } catch (SQLException e) {</span>
+<span class="nc" id="L131">                logger.error(&quot;Error closing SQLite database connection: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L132">            }</span>
+        }
+<span class="nc" id="L134">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

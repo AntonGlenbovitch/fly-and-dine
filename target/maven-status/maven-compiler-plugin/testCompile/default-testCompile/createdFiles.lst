@@ -1,2 +1,5 @@
-com/airline/ordering/domain/OrderTest.class
+com/airline/ordering/repository/impl/OrderRepositoryImplTest.class
 com/airline/ordering/domain/MenuItemTest.class
+com/airline/ordering/domain/OrderTest.class
+com/airline/ordering/repository/impl/PassengerRepositoryImplTest.class
+com/airline/ordering/repository/impl/MenuItemRepositoryImplTest.class

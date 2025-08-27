@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.airline.ordering.repository.impl.OrderRepositoryImplTest" time="0.237" tests="9" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
+    <property name="java.specification.version" value="11"/>
+    <property name="sun.cpu.isalist" value=""/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/home/ubuntu/inflight-ordering-app/target/test-classes:/home/ubuntu/inflight-ordering-app/target/classes:/home/ubuntu/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:/home/ubuntu/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.14.2/jackson-databind-2.14.2.jar:/home/ubuntu/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.14.2/jackson-annotations-2.14.2.jar:/home/ubuntu/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.14.2/jackson-core-2.14.2.jar:/home/ubuntu/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.14.2/jackson-datatype-jsr310-2.14.2.jar:/home/ubuntu/.m2/repository/org/xerial/sqlite-jdbc/3.41.2.1/sqlite-jdbc-3.41.2.1.jar:/home/ubuntu/.m2/repository/org/hibernate/orm/hibernate-core/6.1.7.Final/hibernate-core-6.1.7.Final.jar:/home/ubuntu/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.0.0/jakarta.persistence-api-3.0.0.jar:/home/ubuntu/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.0/jakarta.transaction-api-2.0.0.jar:/home/ubuntu/.m2/repository/org/jboss/logging/jboss-logging/3.4.3.Final/jboss-logging-3.4.3.Final.jar:/home/ubuntu/.m2/repository/org/hibernate/common/hibernate-commons-annotations/6.0.6.Final/hibernate-commons-annotations-6.0.6.Final.jar:/home/ubuntu/.m2/repository/org/jboss/jandex/2.4.2.Final/jandex-2.4.2.Final.jar:/home/ubuntu/.m2/repository/com/fasterxml/classmate/1.5.1/classmate-1.5.1.jar:/home/ubuntu/.m2/repository/net/bytebuddy/byte-buddy/1.12.18/byte-buddy-1.12.18.jar:/home/ubuntu/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/3.0.1/jakarta.xml.bind-api-3.0.1.jar:/home/ubuntu/.m2/repository/com/sun/activation/jakarta.activation/2.0.1/jakarta.activation-2.0.1.jar:/home/ubuntu/.m2/repository/org/glassfish/jaxb/jaxb-runtime/3.0.2/jaxb-runtime-3.0.2.jar:/home/ubuntu/.m2/repository/org/glassfish/jaxb/jaxb-core/3.0.2/jaxb-core-3.0.2.jar:/home/ubuntu/.m2/repository/org/glassfish/jaxb/txw2/3.0.2/txw2-3.0.2.jar:/home/ubuntu/.m2/repository/com/sun/istack/istack-commons-runtime/4.0.1/istack-commons-runtime-4.0.1.jar:/home/ubuntu/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.0/jakarta.inject-api-2.0.0.jar:/home/ubuntu/.m2/repository/org/antlr/antlr4-runtime/4.10.1/antlr4-runtime-4.10.1.jar:/home/ubuntu/.m2/repository/org/hibernate/orm/hibernate-community-dialects/6.1.7.Final/hibernate-community-dialects-6.1.7.Final.jar:/home/ubuntu/.m2/repository/org/slf4j/slf4j-api/2.0.6/slf4j-api-2.0.6.jar:/home/ubuntu/.m2/repository/ch/qos/logback/logback-classic/1.4.5/logback-classic-1.4.5.jar:/home/ubuntu/.m2/repository/ch/qos/logback/logback-core/1.4.5/logback-core-1.4.5.jar:/home/ubuntu/.m2/repository/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar:/home/ubuntu/.m2/repository/org/hibernate/validator/hibernate-validator/8.0.0.Final/hibernate-validator-8.0.0.Final.jar:/home/ubuntu/.m2/repository/org/apache/httpcomponents/client5/httpclient5/5.2.1/httpclient5-5.2.1.jar:/home/ubuntu/.m2/repository/org/apache/httpcomponents/core5/httpcore5/5.2/httpcore5-5.2.jar:/home/ubuntu/.m2/repository/org/apache/httpcomponents/core5/httpcore5-h2/5.2/httpcore5-h2-5.2.jar:/home/ubuntu/.m2/repository/org/bouncycastle/bcprov-jdk15on/1.70/bcprov-jdk15on-1.70.jar:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter/5.9.2/junit-jupiter-5.9.2.jar:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.2/junit-jupiter-api-5.9.2.jar:/home/ubuntu/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/ubuntu/.m2/repository/org/junit/platform/junit-platform-commons/1.9.2/junit-platform-commons-1.9.2.jar:/home/ubuntu/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.9.2/junit-jupiter-params-5.9.2.jar:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.2/junit-jupiter-engine-5.9.2.jar:/home/ubuntu/.m2/repository/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.jar:/home/ubuntu/.m2/repository/org/mockito/mockito-core/5.1.1/mockito-core-5.1.1.jar:/home/ubuntu/.m2/repository/net/bytebuddy/byte-buddy-agent/1.12.22/byte-buddy-agent-1.12.22.jar:/home/ubuntu/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/home/ubuntu/.m2/repository/org/mockito/mockito-junit-jupiter/5.1.1/mockito-junit-jupiter-5.1.1.jar:"/>
+    <property name="java.vm.vendor" value="Ubuntu"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://ubuntu.com/"/>
+    <property name="user.timezone" value="America/New_York"/>
+    <property name="java.vm.specification.version" value="11"/>
+    <property name="os.name" value="Linux"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-11-openjdk-amd64/lib"/>
+    <property name="sun.java.command" value="/home/ubuntu/inflight-ordering-app/target/surefire/surefirebooter-20250826163744783_3.jar /home/ubuntu/inflight-ordering-app/target/surefire 2025-08-26T16-37-44_584-jvmRun1 surefire-20250826163744783_1tmp surefire_0-20250826163744783_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/home/ubuntu/inflight-ordering-app/target/test-classes:/home/ubuntu/inflight-ordering-app/target/classes:/home/ubuntu/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:/home/ubuntu/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.14.2/jackson-databind-2.14.2.jar:/home/ubuntu/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.14.2/jackson-annotations-2.14.2.jar:/home/ubuntu/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.14.2/jackson-core-2.14.2.jar:/home/ubuntu/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.14.2/jackson-datatype-jsr310-2.14.2.jar:/home/ubuntu/.m2/repository/org/xerial/sqlite-jdbc/3.41.2.1/sqlite-jdbc-3.41.2.1.jar:/home/ubuntu/.m2/repository/org/hibernate/orm/hibernate-core/6.1.7.Final/hibernate-core-6.1.7.Final.jar:/home/ubuntu/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.0.0/jakarta.persistence-api-3.0.0.jar:/home/ubuntu/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.0/jakarta.transaction-api-2.0.0.jar:/home/ubuntu/.m2/repository/org/jboss/logging/jboss-logging/3.4.3.Final/jboss-logging-3.4.3.Final.jar:/home/ubuntu/.m2/repository/org/hibernate/common/hibernate-commons-annotations/6.0.6.Final/hibernate-commons-annotations-6.0.6.Final.jar:/home/ubuntu/.m2/repository/org/jboss/jandex/2.4.2.Final/jandex-2.4.2.Final.jar:/home/ubuntu/.m2/repository/com/fasterxml/classmate/1.5.1/classmate-1.5.1.jar:/home/ubuntu/.m2/repository/net/bytebuddy/byte-buddy/1.12.18/byte-buddy-1.12.18.jar:/home/ubuntu/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/3.0.1/jakarta.xml.bind-api-3.0.1.jar:/home/ubuntu/.m2/repository/com/sun/activation/jakarta.activation/2.0.1/jakarta.activation-2.0.1.jar:/home/ubuntu/.m2/repository/org/glassfish/jaxb/jaxb-runtime/3.0.2/jaxb-runtime-3.0.2.jar:/home/ubuntu/.m2/repository/org/glassfish/jaxb/jaxb-core/3.0.2/jaxb-core-3.0.2.jar:/home/ubuntu/.m2/repository/org/glassfish/jaxb/txw2/3.0.2/txw2-3.0.2.jar:/home/ubuntu/.m2/repository/com/sun/istack/istack-commons-runtime/4.0.1/istack-commons-runtime-4.0.1.jar:/home/ubuntu/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.0/jakarta.inject-api-2.0.0.jar:/home/ubuntu/.m2/repository/org/antlr/antlr4-runtime/4.10.1/antlr4-runtime-4.10.1.jar:/home/ubuntu/.m2/repository/org/hibernate/orm/hibernate-community-dialects/6.1.7.Final/hibernate-community-dialects-6.1.7.Final.jar:/home/ubuntu/.m2/repository/org/slf4j/slf4j-api/2.0.6/slf4j-api-2.0.6.jar:/home/ubuntu/.m2/repository/ch/qos/logback/logback-classic/1.4.5/logback-classic-1.4.5.jar:/home/ubuntu/.m2/repository/ch/qos/logback/logback-core/1.4.5/logback-core-1.4.5.jar:/home/ubuntu/.m2/repository/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar:/home/ubuntu/.m2/repository/org/hibernate/validator/hibernate-validator/8.0.0.Final/hibernate-validator-8.0.0.Final.jar:/home/ubuntu/.m2/repository/org/apache/httpcomponents/client5/httpclient5/5.2.1/httpclient5-5.2.1.jar:/home/ubuntu/.m2/repository/org/apache/httpcomponents/core5/httpcore5/5.2/httpcore5-5.2.jar:/home/ubuntu/.m2/repository/org/apache/httpcomponents/core5/httpcore5-h2/5.2/httpcore5-h2-5.2.jar:/home/ubuntu/.m2/repository/org/bouncycastle/bcprov-jdk15on/1.70/bcprov-jdk15on-1.70.jar:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter/5.9.2/junit-jupiter-5.9.2.jar:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.2/junit-jupiter-api-5.9.2.jar:/home/ubuntu/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/ubuntu/.m2/repository/org/junit/platform/junit-platform-commons/1.9.2/junit-platform-commons-1.9.2.jar:/home/ubuntu/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.9.2/junit-jupiter-params-5.9.2.jar:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.2/junit-jupiter-engine-5.9.2.jar:/home/ubuntu/.m2/repository/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.jar:/home/ubuntu/.m2/repository/org/mockito/mockito-core/5.1.1/mockito-core-5.1.1.jar:/home/ubuntu/.m2/repository/net/bytebuddy/byte-buddy-agent/1.12.22/byte-buddy-agent-1.12.22.jar:/home/ubuntu/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/home/ubuntu/.m2/repository/org/mockito/mockito-junit-jupiter/5.1.1/mockito-junit-jupiter-5.1.1.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/home/ubuntu"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-07-15"/>
+    <property name="java.home" value="/usr/lib/jvm/java-11-openjdk-amd64"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/home/ubuntu/inflight-ordering-app"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="/home/ubuntu/inflight-ordering-app/target/surefire/surefirebooter-20250826163744783_3.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="11.0.28+6-post-Ubuntu-1ubuntu122.04.1"/>
+    <property name="user.name" value="ubuntu"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="6.1.102"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="localRepository" value="/home/ubuntu/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://bugs.launchpad.net/ubuntu/+source/openjdk-lts"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="java.version" value="11.0.28"/>
+    <property name="user.dir" value="/home/ubuntu/inflight-ordering-app"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.vendor" value="Ubuntu"/>
+    <property name="java.vm.version" value="11.0.28+6-post-Ubuntu-1ubuntu122.04.1"/>
+    <property name="java.specification.maintenance.version" value="3"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="55.0"/>
+  </properties>
+  <testcase name="testFindByStatus" classname="com.airline.ordering.repository.impl.OrderRepositoryImplTest" time="0.032">
+    <system-out><![CDATA[16:37:46.961 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:46.970 [main] INFO com.airline.ordering.repository.SQLiteConnection - Database schema initialized successfully.
+16:37:46.972 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:46.973 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:46.975 [main] INFO com.airline.ordering.repository.impl.PassengerRepositoryImpl - Passenger saved: df2532b8-332d-4952-baab-5b1cbb8455bc
+16:37:46.976 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:46.983 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: d8fbeee7-d3eb-4f5a-98ad-80596c78ca74
+16:37:46.984 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:46.987 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: ab95d4a7-612a-479d-aa3e-0676eae2bc52
+16:37:46.987 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:46.990 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+]]></system-out>
+  </testcase>
+  <testcase name="testFindBySeatNumber" classname="com.airline.ordering.repository.impl.OrderRepositoryImplTest" time="0.025">
+    <system-out><![CDATA[16:37:46.997 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.006 [main] INFO com.airline.ordering.repository.SQLiteConnection - Database schema initialized successfully.
+16:37:47.007 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.008 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.010 [main] INFO com.airline.ordering.repository.impl.PassengerRepositoryImpl - Passenger saved: c4bb070a-afe1-4515-a70b-865f4d7927c5
+16:37:47.011 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.014 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: de0d1e7b-b6b9-409d-864d-5b0ea5e1d91f
+16:37:47.014 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.018 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: 4c0ec98d-6ccf-43e5-b7a3-bc278f249972
+16:37:47.018 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+]]></system-out>
+  </testcase>
+  <testcase name="testUpdateOrder" classname="com.airline.ordering.repository.impl.OrderRepositoryImplTest" time="0.026">
+    <system-out><![CDATA[16:37:47.022 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.033 [main] INFO com.airline.ordering.repository.SQLiteConnection - Database schema initialized successfully.
+16:37:47.034 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.034 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.037 [main] INFO com.airline.ordering.repository.impl.PassengerRepositoryImpl - Passenger saved: 6fb72d6e-0ba1-4b15-a531-5bf40f363a5e
+16:37:47.038 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.041 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: 2d45789e-623a-45ae-a295-5ea80125dd7e
+16:37:47.042 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.044 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: 2d45789e-623a-45ae-a295-5ea80125dd7e
+16:37:47.045 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+]]></system-out>
+  </testcase>
+  <testcase name="testFindAll" classname="com.airline.ordering.repository.impl.OrderRepositoryImplTest" time="0.025">
+    <system-out><![CDATA[16:37:47.048 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.057 [main] INFO com.airline.ordering.repository.SQLiteConnection - Database schema initialized successfully.
+16:37:47.058 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.059 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.061 [main] INFO com.airline.ordering.repository.impl.PassengerRepositoryImpl - Passenger saved: 723daa21-3d9e-4303-9e42-dca3ff14deee
+16:37:47.062 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.064 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: 50029ec4-0487-4158-b7f6-846a4a62ce23
+16:37:47.064 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.065 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.067 [main] INFO com.airline.ordering.repository.impl.PassengerRepositoryImpl - Passenger saved: a3bf558a-00ff-4ba9-9f84-202ac960c29d
+16:37:47.067 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.069 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: 8776458a-949d-4918-9ed1-37e2b8725f81
+16:37:47.070 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+]]></system-out>
+  </testcase>
+  <testcase name="testCount" classname="com.airline.ordering.repository.impl.OrderRepositoryImplTest" time="0.023">
+    <system-out><![CDATA[16:37:47.073 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.083 [main] INFO com.airline.ordering.repository.SQLiteConnection - Database schema initialized successfully.
+16:37:47.085 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.085 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.086 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.088 [main] INFO com.airline.ordering.repository.impl.PassengerRepositoryImpl - Passenger saved: c9306ef9-4605-4873-bfb8-7e365d4ee41f
+16:37:47.089 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.091 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: c18f35cf-9104-40a3-aa6d-b2d60ba0fb7a
+16:37:47.091 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.092 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.092 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.094 [main] INFO com.airline.ordering.repository.impl.PassengerRepositoryImpl - Passenger saved: 252dfb63-4a5c-4735-b096-9735c82a3109
+16:37:47.094 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.095 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: 64b3e46c-7ac7-4f6c-892f-dda5598d2b14
+16:37:47.096 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+]]></system-out>
+  </testcase>
+  <testcase name="testFindOrdersRequiringSync" classname="com.airline.ordering.repository.impl.OrderRepositoryImplTest" time="0.03">
+    <system-out><![CDATA[16:37:47.098 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.106 [main] INFO com.airline.ordering.repository.SQLiteConnection - Database schema initialized successfully.
+16:37:47.107 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.108 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.110 [main] INFO com.airline.ordering.repository.impl.PassengerRepositoryImpl - Passenger saved: bbedb4d8-adb8-4bb4-a4ae-c99f99f862df
+16:37:47.110 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.112 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: 86a4ca23-7b5d-4e66-aedf-96a123f60e2c
+16:37:47.113 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.115 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: 4d09dfc9-9e29-40ae-9823-6f2e6d226177
+16:37:47.116 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.117 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: c1c4d516-9ca7-46b3-9dc6-90e9213af1df
+16:37:47.118 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.120 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: 1df2dbc5-2cc5-4ef5-a42b-8daa6fe7e9de
+16:37:47.121 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.123 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: a1115bbb-27f8-4a03-a0d4-edcd98f42229
+16:37:47.124 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+]]></system-out>
+  </testcase>
+  <testcase name="testFindByPassengerId" classname="com.airline.ordering.repository.impl.OrderRepositoryImplTest" time="0.027">
+    <system-out><![CDATA[16:37:47.128 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.137 [main] INFO com.airline.ordering.repository.SQLiteConnection - Database schema initialized successfully.
+16:37:47.138 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.139 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.141 [main] INFO com.airline.ordering.repository.impl.PassengerRepositoryImpl - Passenger saved: ab0d5854-3d94-4204-b10c-98fa78592b6a
+16:37:47.141 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.142 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.143 [main] INFO com.airline.ordering.repository.impl.PassengerRepositoryImpl - Passenger saved: eb0c27e4-3cda-4230-82db-095ec3c19796
+16:37:47.144 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.146 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: d91eb21a-4981-4a14-adec-a91f92b15823
+16:37:47.147 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.148 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: 820612e4-7f4a-4642-9398-60d090f41f9d
+16:37:47.149 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.150 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: 711fb582-4018-4992-a7b3-e244c880544f
+16:37:47.151 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.153 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+]]></system-out>
+  </testcase>
+  <testcase name="testDeleteById" classname="com.airline.ordering.repository.impl.OrderRepositoryImplTest" time="0.021">
+    <system-out><![CDATA[16:37:47.156 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.166 [main] INFO com.airline.ordering.repository.SQLiteConnection - Database schema initialized successfully.
+16:37:47.167 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.167 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.170 [main] INFO com.airline.ordering.repository.impl.PassengerRepositoryImpl - Passenger saved: cb414b6c-1fde-4574-94e8-d0543a834376
+16:37:47.170 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.172 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: 7efcdbe0-9b85-444d-8510-bde968134d2d
+16:37:47.173 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.175 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order deleted: 7efcdbe0-9b85-444d-8510-bde968134d2d
+16:37:47.175 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+]]></system-out>
+  </testcase>
+  <testcase name="testSaveAndFindById" classname="com.airline.ordering.repository.impl.OrderRepositoryImplTest" time="0.019">
+    <system-out><![CDATA[16:37:47.178 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.187 [main] INFO com.airline.ordering.repository.SQLiteConnection - Database schema initialized successfully.
+16:37:47.187 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.188 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.190 [main] INFO com.airline.ordering.repository.impl.PassengerRepositoryImpl - Passenger saved: aaba6f00-f009-48a7-ae5c-2827249b62cd
+16:37:47.191 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+16:37:47.193 [main] INFO com.airline.ordering.repository.impl.OrderRepositoryImpl - Order saved: ea7e717d-f3af-439d-be3b-e78885ab2fbc
+16:37:47.194 [main] INFO com.airline.ordering.repository.SQLiteConnection - Connected to SQLite database: jdbc:sqlite:inflight_ordering.db
+]]></system-out>
+  </testcase>
+</testsuite>

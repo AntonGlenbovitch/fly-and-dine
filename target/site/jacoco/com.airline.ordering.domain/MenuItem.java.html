@@ -79,8 +79,8 @@ public class MenuItem {
     }
     
     public void setItemId(UUID itemId) {
-<span class="nc" id="L82">        this.itemId = itemId;</span>
-<span class="nc" id="L83">    }</span>
+<span class="fc" id="L82">        this.itemId = itemId;</span>
+<span class="fc" id="L83">    }</span>
     
     public String getName() {
 <span class="fc" id="L86">        return name;</span>
@@ -96,36 +96,36 @@ public class MenuItem {
     }
     
     public void setDescription(String description) {
-<span class="nc" id="L99">        this.description = description;</span>
-<span class="nc" id="L100">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L101">    }</span>
+<span class="fc" id="L99">        this.description = description;</span>
+<span class="fc" id="L100">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L101">    }</span>
     
     public BigDecimal getPrice() {
 <span class="fc" id="L104">        return price;</span>
     }
     
     public void setPrice(BigDecimal price) {
-<span class="nc" id="L108">        this.price = price;</span>
-<span class="nc" id="L109">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L110">    }</span>
+<span class="fc" id="L108">        this.price = price;</span>
+<span class="fc" id="L109">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L110">    }</span>
     
     public MenuCategory getCategory() {
 <span class="fc" id="L113">        return category;</span>
     }
     
     public void setCategory(MenuCategory category) {
-<span class="nc" id="L117">        this.category = category;</span>
-<span class="nc" id="L118">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L119">    }</span>
+<span class="fc" id="L117">        this.category = category;</span>
+<span class="fc" id="L118">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L119">    }</span>
     
     public Set&lt;PassengerType&gt; getAvailableForTypes() {
 <span class="fc" id="L122">        return new HashSet&lt;&gt;(availableForTypes);</span>
     }
     
     public void setAvailableForTypes(Set&lt;PassengerType&gt; availableForTypes) {
-<span class="nc" id="L126">        this.availableForTypes = new HashSet&lt;&gt;(availableForTypes);</span>
-<span class="nc" id="L127">        this.updatedAt = LocalDateTime.now();</span>
-<span class="nc" id="L128">    }</span>
+<span class="fc" id="L126">        this.availableForTypes = new HashSet&lt;&gt;(availableForTypes);</span>
+<span class="fc" id="L127">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L128">    }</span>
     
     public void addAvailableForType(PassengerType type) {
 <span class="fc" id="L131">        this.availableForTypes.add(type);</span>
@@ -178,7 +178,7 @@ public class MenuItem {
 <span class="fc" id="L178">    }</span>
     
     public Set&lt;UUID&gt; getComboItems() {
-<span class="nc" id="L181">        return new HashSet&lt;&gt;(comboItems);</span>
+<span class="fc" id="L181">        return new HashSet&lt;&gt;(comboItems);</span>
     }
     
     public void setComboItems(Set&lt;UUID&gt; comboItems) {
@@ -187,20 +187,20 @@ public class MenuItem {
 <span class="fc" id="L187">    }</span>
     
     public LocalDateTime getCreatedAt() {
-<span class="nc" id="L190">        return createdAt;</span>
+<span class="fc" id="L190">        return createdAt;</span>
     }
     
     public void setCreatedAt(LocalDateTime createdAt) {
-<span class="nc" id="L194">        this.createdAt = createdAt;</span>
-<span class="nc" id="L195">    }</span>
+<span class="fc" id="L194">        this.createdAt = createdAt;</span>
+<span class="fc" id="L195">    }</span>
     
     public LocalDateTime getUpdatedAt() {
 <span class="fc" id="L198">        return updatedAt;</span>
     }
     
     public void setUpdatedAt(LocalDateTime updatedAt) {
-<span class="nc" id="L202">        this.updatedAt = updatedAt;</span>
-<span class="nc" id="L203">    }</span>
+<span class="fc" id="L202">        this.updatedAt = updatedAt;</span>
+<span class="fc" id="L203">    }</span>
     
     // Business methods
     public boolean isAvailableFor(PassengerType passengerType) {
