@@ -77,12 +77,14 @@
 - Success Rate: 100% ✅
 ## Phase 8: Documentation and deployment guide
 
-- [ ] Create comprehensive technical documentation
-- [ ] Write deployment guide for AWS infrastructure
-- [ ] Document API specifications and interfaces
-- [ ] Create user manuals for different roles (crew, passengers, administrators)
-- [ ] Document security protocols and compliance procedures
-- [ ] Create troubleshooting and maintenance guides
-- [ ] Document testing procedures and quality assurance
-- [ ] Create step-by-step instructions for AWS deployment
+- [x] List AWS components req. for this app to run on AWS.
+- [x] Create estimated cost to run this app on AWS (per month)
+- [x] Create comprehensive technical documentation
+- [x] Write deployment guide for AWS infrastructure
+- [x] Document API specifications and interfaces
+- [x] Create user manuals for different roles (crew, passengers, administrators)
+- [x] Document security protocols and compliance procedures
+- [x] Create troubleshooting and maintenance guides
+- [x] Document testing procedures and quality assurance
+- [x] Create step-by-step instructions for AWS deployment
 
